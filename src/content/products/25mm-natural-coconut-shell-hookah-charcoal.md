@@ -124,4 +124,4 @@ class-level references.
 - [Specification: Moisture](/specifications/moisture/)
 - [Specification: Fixed Carbon](/specifications/fixed-carbon/)
 - [Request a Sample](https://guotan.com/request-sample/)
-- [Request a Quote](https://guotan.com/request-quote/)
+- [Request a Quote](https://guotan.com/contact/)

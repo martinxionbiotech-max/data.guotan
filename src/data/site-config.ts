@@ -35,6 +35,7 @@ export const site: SiteConfig = {
     { label: 'Sizes', href: '/sizes/' },
     { label: 'Packaging', href: '/packaging/' },
     { label: 'Compare', href: '/compare/' },
+    { label: '← Main Site', href: `${SITES.main}/`, external: true },
   ],
   footerCols: [
     {
@@ -69,7 +70,7 @@ export const site: SiteConfig = {
           href: `${SITES.main}/products/coconut-shell-charcoal/`,
           external: true,
         },
-        ext('Request a Quote', `${SITES.main}/request-quote/`),
+        ext('Request a Quote', `${SITES.main}/contact/`),
         ext('Request Samples', `${SITES.main}/request-sample/`),
         ext('Testing & methodology', `${SITES.testing}/tests/ash-content/`),
         ext('Manufacturer directory', `${SITES.manufacturer}/`),

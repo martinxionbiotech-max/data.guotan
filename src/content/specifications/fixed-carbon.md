@@ -60,4 +60,4 @@ if they do not sum to 100% (dry basis) the set is internally inconsistent.
 
 For lab-side detail on how these fractions are obtained, see the
 [testing sub-site](https://testing.guotan.com/tests/ash-content/); for a
-batch datasheet, [request a quote](https://guotan.com/request-quote/).
+batch datasheet, [request a quote](https://guotan.com/contact/).

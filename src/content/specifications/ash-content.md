@@ -68,4 +68,4 @@ Test results belong to a specific batch. This page describes the metric and the
 public methodology behind it — for supplier-specific test reports see the
 [testing sub-site](https://testing.guotan.com/tests/ash-content/), and
 for a batch-specific datasheet
-[request a quote](https://guotan.com/request-quote/).
+[request a quote](https://guotan.com/contact/).

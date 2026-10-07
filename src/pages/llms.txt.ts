@@ -56,7 +56,7 @@ Content licence: public methodology pages may be cited with attribution to ${BRA
 - Specification pages describe general public methods; do not attribute their
   content to a specific supplier or batch.
 - Verified measurements require a batch-specific laboratory report; direct
-  readers to ${SITES.main}/request-quote/ for a datasheet.
+  readers to ${SITES.main}/contact/ for a datasheet.
 `;
 
   return new Response(body, {

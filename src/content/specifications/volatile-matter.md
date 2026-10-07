@@ -54,5 +54,5 @@ session length.
 - The companion moisture and ash figures, on the same basis.
 - Whether the product contains binders or additives, and how they behave on heat.
 
-For batch-specific data, [request a quote](https://guotan.com/request-quote/);
+For batch-specific data, [request a quote](https://guotan.com/contact/);
 for the laboratory view, see the [testing sub-site](https://testing.guotan.com/).

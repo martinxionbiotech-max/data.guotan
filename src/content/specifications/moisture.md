@@ -55,5 +55,5 @@ avoid this dependence.
 - Whether the sample was sealed and how it was transported before testing.
 - An arrival check on the landed batch where packaging is not moisture-barrier.
 
-For batch-specific moisture data, [request a quote](https://guotan.com/request-quote/);
+For batch-specific moisture data, [request a quote](https://guotan.com/contact/);
 for the laboratory view, see the [testing sub-site](https://testing.guotan.com/).
