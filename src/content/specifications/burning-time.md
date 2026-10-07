@@ -59,5 +59,5 @@ differences in [fixed carbon](/specifications/fixed-carbon/) or
 - Number of pieces and mass used, and the endpoint definition.
 - Whether the number is a single run or an average of repeats.
 
-For batch-specific performance data, [request a quote](https://chinacharcoalhub.com/request-quote/);
-for the laboratory view, see the [testing sub-site](https://testing.chinacharcoalhub.com/).
+For batch-specific performance data, [request a quote](https://guotan.com/request-quote/);
+for the laboratory view, see the [testing sub-site](https://testing.guotan.com/).

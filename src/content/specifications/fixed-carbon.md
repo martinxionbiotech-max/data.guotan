@@ -59,5 +59,5 @@ if they do not sum to 100% (dry basis) the set is internally inconsistent.
 - Confirmation that the values come from the same sample or batch composite.
 
 For lab-side detail on how these fractions are obtained, see the
-[testing sub-site](https://testing.chinacharcoalhub.com/tests/ash-content/); for a
-batch datasheet, [request a quote](https://chinacharcoalhub.com/request-quote/).
+[testing sub-site](https://testing.guotan.com/tests/ash-content/); for a
+batch datasheet, [request a quote](https://guotan.com/request-quote/).

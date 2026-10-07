@@ -55,5 +55,5 @@ most when pieces are uneven.
 - A mean-and-range summary from a random sample, not a single claimed size.
 - An arrival check if the pieces are packed in a way that can abrade.
 
-For batch-specific dimensional data, [request a quote](https://chinacharcoalhub.com/request-quote/);
-for the laboratory view, see the [testing sub-site](https://testing.chinacharcoalhub.com/).
+For batch-specific dimensional data, [request a quote](https://guotan.com/request-quote/);
+for the laboratory view, see the [testing sub-site](https://testing.guotan.com/).
