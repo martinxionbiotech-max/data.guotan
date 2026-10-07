@@ -15,8 +15,8 @@ ash_content: "≤ 3.5% (typical 3.0%), ASTM D3174"
 moisture: "≤ 5%, ASTM D3173"
 fixed_carbon: "≥ 80%, ASTM D3172"
 volatile_matter: "≤ 12%, ASTM D3175"
-burning_time: null
-ignition_time: null
+burning_time: "~60 min per 25 mm cube (user-reported C25); supplier claims up to 120 min — condition-dependent"
+ignition_time: "8-12 min (supplier-declared)"
 odor: null
 spark_level: null
 temperature: null
@@ -102,6 +102,9 @@ reference points, not commitments by any single supplier**:
 | Hookah briquette ash (premium) | 1.6–2.2% | Supplier-declared industry listings |
 | Hookah briquette moisture | 6–8% | Supplier-declared industry listings |
 | Hookah briquette fixed carbon | 75–85% | Supplier-declared industry listings |
+| Burn time (25 mm cube) | ~60 min typical; claims up to 120 min | User reports + supplier listings (condition-dependent) |
+| Ignition time | 8–12 min | Supplier-declared industry listings |
+| Burn temperature | ~650 °C | Supplier-declared industry listings |
 
 These ranges describe the material class as publicly documented; a purchase
 decision must rest on the batch-specific values of the actual supplier, not on
