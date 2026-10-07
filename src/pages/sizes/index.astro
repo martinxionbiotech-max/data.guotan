@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES } from '../../lib/sites';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+/* Size classes are published from verified product records only. */
+const sizes = await getCollection('sizes');
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Sizes', path: '/sizes/' },
+];
+
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Size Classes"
+  description="Charcoal size classes: nominal dimensions in millimetres, tolerance expectations and the products typically sold in each class. Classes are pending supplier verification."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Size classes</h1>
+      <p class="lede">
+        Size classes are nominal, not exact: the class records the dimension a
+        batch is sold as, together with the tolerance the producer can hold.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body="No size classes are published yet. A class is listed here only when verified product records actually ship in it, with the tolerance range measured rather than assumed."
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>How size is recorded</h2>
+        <p>
+          The database stores a nominal dimension in millimetres
+          (<span class="mono">diameter_mm</span>) plus a free-text size class, so
+          cube edges and round diameters can be described in the supplier's own
+          terms without forcing them into a false numeric equivalence.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Size class</th><th>Nominal dimension</th><th>Products</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="null" colspan="4">
+                No size classes yet ({sizes.length} entries) — data pending,
+                supplier verification in progress.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">Read tolerance with the class, never separately.</span>
+        <p>
+          A nominal 25 mm or 26 mm cube means little without the deviation range
+          and the sampling plan. See
+          <a href="/specifications/size-tolerance/">size tolerance</a> for how this
+          is measured and what to put in the purchase specification.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

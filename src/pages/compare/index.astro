@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+/* Comparison reads from the products collection; empty until verified. */
+const products = await getCollection('products');
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Compare', path: '/compare/' },
+];
+
+/* Columns mirror the comparable fields of a product record. */
+const columns = [
+  { key: 'product_name', label: 'Product' },
+  { key: 'product_type', label: 'Type' },
+  { key: 'raw_material', label: 'Raw material' },
+  { key: 'shape', label: 'Shape' },
+  { key: 'size', label: 'Size' },
+  { key: 'ash_content', label: 'Ash' },
+  { key: 'moisture', label: 'Moisture' },
+  { key: 'fixed_carbon', label: 'Fixed carbon' },
+  { key: 'volatile_matter', label: 'Volatile matter' },
+  { key: 'burning_time', label: 'Burning time' },
+  { key: 'packaging', label: 'Packaging' },
+  { key: 'minimum_order_quantity', label: 'MOQ' },
+  { key: 'verification_status', label: 'Status' },
+] as const;
+
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Compare Products"
+  description="Compare charcoal product records field by field — material, size, ash, moisture, fixed carbon, burning time, packaging and MOQ. Comparison is empty pending supplier verification."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Compare products</h1>
+      <p class="lede">
+        A side-by-side view of verified product records on the fields that decide
+        a purchase. Comparison only ever shows recorded values — an empty cell
+        means the value is not established, not that it is zero.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body={`${products.length} verified product records are available to compare. The table below shows the comparison structure: rows are products, columns are recorded fields. It stays empty until records pass verification and publish their provenance.`}
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Comparison table</h2>
+        <p>Rows appear as verified records are published.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              {columns.map((c) => <th>{c.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              products.length === 0 ? (
+                <tr>
+                  <td class="null" colspan={columns.length}>
+                    No records available to compare — data pending, supplier
+                    verification in progress.
+                  </td>
+                </tr>
+              ) : (
+                products.map((p) => (
+                  <tr>
+                    {columns.map((c) => (
+                      <td class="spec-value">
+                        {c.key === 'product_name'
+                          ? <a href={`/products/${p.id}/`}>{String(p.data.product_name)}</a>
+                          : String(p.data[c.key] ?? '—')}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">Compare like with like.</span>
+        <p>
+          Two figures are only comparable when they share a method and a reporting
+          basis. Before trusting a comparison, read
+          <a href="/specifications/ash-content/">ash content</a>,
+          <a href="/specifications/moisture/">moisture</a> and
+          <a href="/specifications/fixed-carbon/">fixed carbon</a>.
+        </p>
+      </div>
+
+      <p class="meta-line">
+        Need a batch datasheet to compare against?{' '}
+        <a href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a quote</a>{' '}
+        on the main {BRAND} site, or{' '}
+        <a href={`${SITES.main}/request-sample/`} target="_blank" rel="noopener">request samples</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

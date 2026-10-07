@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES } from '../../lib/sites';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+/* Application entries are populated from verified product records only. */
+const applications = await getCollection('applications');
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Applications', path: '/applications/' },
+];
+
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Applications"
+  description="Charcoal applications index: how product records are grouped by end use, and which raw materials and specifications each application depends on."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Applications</h1>
+      <p class="lede">
+        An application entry links an end use to the raw materials that serve it
+        and to the measurements that matter most for that use.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body="No application entries are published yet. Each entry is written from verified product records — the raw materials actually in the database and the specifications that are actually measured — so the index stays empty until that evidence exists."
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What an application entry contains</h2>
+      </div>
+      <div class="grid grid-4">
+        <div class="card">
+          <h3>Name &amp; slug</h3>
+          <p>The end use the entry describes.</p>
+        </div>
+        <div class="card">
+          <h3>Description</h3>
+          <p>What the end use demands from the fuel.</p>
+        </div>
+        <div class="card">
+          <h3>Related raw materials</h3>
+          <p>Feedstocks theoretically suited and actually present in records.</p>
+        </div>
+        <div class="card">
+          <h3>Related specifications</h3>
+          <p>The metrics that decide suitability, linked to methodology pages.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Applications</h2>
+        <p>Entries appear here once verified product records support them.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Application</th><th>Related raw materials</th><th>Key specifications</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="null" colspan="3">
+                No application entries yet ({applications.length} entries) — data
+                pending, supplier verification in progress.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="meta-line">
+        Methodology: <a href="/specifications/">specifications</a>. Records:
+        <a href="/products/">product database</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

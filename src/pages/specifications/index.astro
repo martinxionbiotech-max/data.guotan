@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { breadcrumbJsonLd, datasetJsonLd } from '../../lib/seo';
+
+/* The only populated collection: public-standard methodology pages. */
+const specs = (await getCollection('specifications')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Specifications', path: '/specifications/' },
+];
+
+const jsonLd = [
+  datasetJsonLd({
+    id: `${SITES.data}/specifications/#dataset`,
+    name: 'Charcoal specification methodology',
+    description:
+      'Public-standard methodology pages describing what each charcoal metric measures, how it is determined, and what a B2B buyer should ask for. Knowledge pages, not supplier test data.',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Specification Methodology"
+  description="What each charcoal metric means and how it is measured: ash content, fixed carbon, burning time, moisture, volatile matter and size tolerance, per public standards."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Specification methodology</h1>
+      <p class="lede">
+        Six pages covering the measurements that appear on a charcoal datasheet.
+        Each explains what the metric measures, why it matters, the general method
+        used, what a buyer should ask for, and where the measurement breaks down.
+      </p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-title">These are methodology pages, not test results.</span>
+      <p>
+        Nothing here is a {BRAND} test result or a supplier claim. The pages
+        describe public standard methods in general terms so that the figures on a
+        datasheet can be read, compared and questioned.
+      </p>
+    </div>
+
+    <section class="section">
+      <div class="grid grid-2">
+        {
+          specs.map((s) => (
+            <div class="card">
+              <h3><a href={`/specifications/${s.data.slug}/`}>{s.data.title}</a></h3>
+              <p>{s.data.description}</p>
+              <p class="meta-line">
+                <span class="badge badge-muted">{s.data.metric.split('—')[0].trim()}</span>{' '}
+                Updated <span class="mono">{s.data.last_updated}</span>
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>How the metrics fit together</h2>
+          <p>
+            Moisture, volatile matter and ash are measured directly; fixed carbon
+            is calculated from them. Burning time and size tolerance describe
+            physical behaviour rather than chemistry.
+          </p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Measured directly</h3>
+            <p>
+              <a href="/specifications/moisture/">Moisture</a>,
+              <a href="/specifications/volatile-matter/">volatile matter</a> and
+              <a href="/specifications/ash-content/">ash content</a> — the three
+              components of proximate analysis.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Calculated</h3>
+            <p>
+              <a href="/specifications/fixed-carbon/">Fixed carbon</a> — derived by
+              difference, so it inherits the uncertainty of all three inputs.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Physical performance</h3>
+            <p>
+              <a href="/specifications/burning-time/">Burning time</a> and
+              <a href="/specifications/size-tolerance/">size tolerance</a> — no
+              universal standard; conditions must travel with the figure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+/* ------------------------------------------------------------------ */
+/* /products/<slug>/ — product record detail.                          */
+/*                                                                     */
+/* getStaticPaths() returns an EMPTY array on purpose: no product      */
+/* entries exist yet (hard rule 1 — no fabricated data). Once verified */
+/* records land in src/content/products/, each one generates its own   */
+/* page here. The template below is the render used for that URL       */
+/* pattern, so it is written as a "data pending" fallback.             */
+/* ------------------------------------------------------------------ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { site } from '../../data/site-config';
+import { SITES } from '../../lib/sites';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return [];
+}
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products/' },
+  { name: 'Product record', path: '/products/' },
+];
+
+const canonical = `${SITES.data}/products/`;
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Product record"
+  description="A charcoal product record on the Charcoal Hub data sub-site. Data pending — supplier verification in progress."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+  noindex
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Product record</h1>
+      <p class="lede">
+        Product records live at <span class="mono">/products/&lt;slug&gt;/</span>
+        and are generated only for verified entries in the products collection.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body="No product record matches this URL. Each record is generated from a verified entry in the products collection: identity, material, dimensions, measured properties, packaging, MOQ and provenance. Until an entry passes verification, no page is generated and no value is displayed."
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What a record page will contain</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Record body</h3>
+          <p>
+            Identity and material, form and dimensions, measured properties
+            (ash, moisture, fixed carbon, volatile matter, burning time,
+            ignition time), sensory and thermal notes, commercial terms.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Record gate</h3>
+          <p>
+            Data source, verification status and last-verified date travel with
+            every field group, so a reader always knows what backs a value.
+          </p>
+        </div>
+      </div>
+
+      <p class="meta-line">
+        See the <a href="/products/">product database index</a> for the field
+        schema, or <a href="/specifications/">the methodology pages</a> for how
+        each metric is measured.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

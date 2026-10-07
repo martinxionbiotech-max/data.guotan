@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { breadcrumbJsonLd, datasetJsonLd } from '../../lib/seo';
+
+/* Products collection is intentionally empty (no fabricated entries). */
+const products = await getCollection('products');
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products/' },
+];
+
+/* §7 field groups — the shape of a record, shown even while empty. */
+const fieldGroups = [
+  {
+    title: 'Identity',
+    fields: ['product_id', 'product_name', 'product_type', 'application'],
+  },
+  {
+    title: 'Material',
+    fields: ['raw_material', 'charcoal_source', 'origin', 'manufacturer_id'],
+  },
+  {
+    title: 'Form & dimensions',
+    fields: ['shape', 'size', 'length', 'width', 'height', 'diameter'],
+  },
+  {
+    title: 'Measured properties',
+    fields: [
+      'ash_content',
+      'moisture',
+      'fixed_carbon',
+      'volatile_matter',
+      'burning_time',
+      'ignition_time',
+    ],
+  },
+  {
+    title: 'Sensory & thermal',
+    fields: ['odor', 'spark_level', 'temperature'],
+  },
+  {
+    title: 'Commercial',
+    fields: [
+      'packaging',
+      'private_label',
+      'minimum_order_quantity',
+      'production_capacity',
+      'testing_available',
+      'certifications',
+    ],
+  },
+  {
+    title: 'Provenance & gate',
+    fields: ['last_verified', 'data_source', 'verification_status'],
+  },
+];
+
+const jsonLd = [
+  datasetJsonLd({
+    id: `${SITES.data}/products/#dataset`,
+    name: 'Charcoal product records',
+    description:
+      'Structured charcoal product records with material, dimensional, measured-property and commercial fields. Empty until supplier verification is complete.',
+  }),
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Product Database"
+  description="Structured charcoal product records: material, dimensions, proximate measurements, burning time, packaging and MOQ. Records are published only after supplier verification."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Product database</h1>
+      <p class="lede">
+        One record per supplier product, built on a strict schema so that two
+        suppliers' figures can be compared field by field. Records are only
+        published once the underlying claim has been verified.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body={`${products.length} verified product records are published today. Product entries are awaiting supplier verification: no identity, measurement or commercial value is shown until both the supplier record and the supporting document have been checked.`}
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Record schema</h2>
+        <p>
+          These are the fields every product record carries. A field whose value
+          is not yet established stays empty rather than being estimated.
+        </p>
+      </div>
+
+      <div class="grid grid-2">
+        {
+          fieldGroups.map((g) => (
+            <div class="card">
+              <h3>{g.title}</h3>
+              <ul>
+                {g.fields.map((f) => (
+                  <li><span class="mono">{f}</span></li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Published records</h2>
+        <p>Verified product records appear in the table below.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Type</th>
+              <th>Ash</th>
+              <th>Moisture</th>
+              <th>Fixed carbon</th>
+              <th>Size</th>
+              <th>MOQ</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              products.length === 0 ? (
+                <tr>
+                  <td class="null" colspan="8">
+                    No verified product records yet — data pending, supplier
+                    verification in progress.
+                  </td>
+                </tr>
+              ) : (
+                products.map((p) => (
+                  <tr>
+                    <td><a href={`/products/${p.id}/`}>{p.data.product_name}</a></td>
+                    <td class="spec-value">{p.data.product_type ?? '—'}</td>
+                    <td class="spec-value">{p.data.ash_content ?? '—'}</td>
+                    <td class="spec-value">{p.data.moisture ?? '—'}</td>
+                    <td class="spec-value">{p.data.fixed_carbon ?? '—'}</td>
+                    <td class="spec-value">{p.data.size ?? '—'}</td>
+                    <td class="spec-value">{p.data.minimum_order_quantity ?? '—'}</td>
+                    <td><span class="badge badge-muted">{p.data.verification_status ?? 'unverified'}</span></td>
+                  </tr>
+                ))
+              )
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="meta-line">
+        Comparison view: <a href="/compare/">compare records side by side</a>.
+        Methodology behind each column: <a href="/specifications/">specifications</a>.
+      </p>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Where to buy</h2>
+          <p>
+            This sub-site publishes data, not offers. Quotation, sampling and
+            ordering are handled on the main {BRAND} site.
+          </p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3><a href={`${SITES.main}/products/`} target="_blank" rel="noopener">Product catalogue</a></h3>
+            <p>Browse the buying catalogue, including coconut shell charcoal.</p>
+          </div>
+          <div class="card">
+            <h3><a href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a Quote</a></h3>
+            <p>Send your specification and target volume to the sourcing team.</p>
+          </div>
+          <div class="card">
+            <h3><a href={`${SITES.main}/request-sample/`} target="_blank" rel="noopener">Request Samples</a></h3>
+            <p>Ask for a physical sample before committing to a batch.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

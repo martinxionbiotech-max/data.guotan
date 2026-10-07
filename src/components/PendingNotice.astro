@@ -1,0 +1,24 @@
+---
+/* Standard "no fabricated data" notice used by every record-rendering
+   page while the collection is empty. */
+interface Props {
+  title?: string;
+  body?: string;
+  compact?: boolean;
+}
+const {
+  title = 'Data pending — supplier verification in progress',
+  body = 'This section renders verified supplier records only. No product, manufacturer or test-report entries have passed verification yet, so no values are shown. Records appear here once a supplier declaration has been checked against documents or third-party testing.',
+  compact = false,
+} = Astro.props;
+---
+
+<div class="callout-pending" role="status" data-state="data-pending">
+  <span class="callout-title">{title}</span>
+  {!compact && <p>{body}</p>}
+  <p class="meta-line">
+    Need a specification now? <a href="/specifications/">Read the measurement methodology</a> or
+    <a href="https://chinacharcoalhub.com/request-quote/" target="_blank" rel="noopener">request a quote</a>
+    for a batch-specific datasheet.
+  </p>
+</div>

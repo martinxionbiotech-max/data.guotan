@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PendingNotice from '../components/PendingNotice.astro';
+import { site } from '../data/site-config';
+import { SITES, BRAND } from '../lib/sites';
+import { breadcrumbJsonLd, datasetJsonLd, webSiteJsonLd, organizationJsonLd } from '../lib/seo';
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [{ name: 'Home', path: '/' }];
+
+const jsonLd = [
+  webSiteJsonLd({
+    id: `${SITES.data}/#website`,
+    name: `${BRAND} Data`,
+    description: site.description,
+  }),
+  organizationJsonLd({
+    id: `${SITES.main}/#organization`,
+    name: BRAND,
+    description:
+      'B2B charcoal supply and sourcing intelligence: product data, manufacturer verification and testing methodology for global buyers.',
+    sameAs: [SITES.main, SITES.data, SITES.manufacturer, SITES.testing, SITES.knowledge],
+  }),
+  datasetJsonLd({
+    id: `${SITES.data}/#dataset`,
+    name: 'Charcoal product & specification database',
+    description:
+      'Structured charcoal product records, nominal size classes, packaging formats, applications and public-standard measurement methodology. Records are published only after supplier verification.',
+  }),
+  breadcrumbJsonLd(
+    crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))
+  ),
+];
+
+const recordTypes = [
+  {
+    title: 'Product records',
+    href: '/products/',
+    body: 'One record per supplier product: identity, raw material, form and dimensions, the proximate measurements (ash, moisture, fixed carbon, volatile matter), burning time, packaging, MOQ and verification status.',
+  },
+  {
+    title: 'Product types',
+    href: '/types/',
+    body: 'The classification axes used to group products — raw-material base, carbonised form and product family — so records can be filtered without inventing names.',
+  },
+  {
+    title: 'Applications',
+    href: '/applications/',
+    body: 'How records are tied to end use (water-pipe/hookah, commercial grilling, and other combustion uses) with the raw materials and specifications each application depends on.',
+  },
+  {
+    title: 'Size classes',
+    href: '/sizes/',
+    body: 'Nominal dimensional classes (cube edge or diameter in millimetres) with their tolerance expectations and the products typically sold in each class.',
+  },
+  {
+    title: 'Packaging formats',
+    href: '/packaging/',
+    body: 'Carton and bag configurations with the typical minimum order quantity and private-label options associated with each format.',
+  },
+  {
+    title: 'Specifications (methodology)',
+    href: '/specifications/',
+    body: 'Six public-standard methodology pages explaining what each measured metric means, how it is determined, and what a buyer should ask for. These are knowledge pages, not test results.',
+  },
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Charcoal Product & Specification Database"
+  description={site.description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Structured charcoal database</p>
+      <h1>Charcoal product and specification data, separated from marketing claims.</h1>
+      <p class="lede">
+        {site.name} is the structured data layer of {BRAND}: product records,
+        size classes, packaging formats and the public-standard methodology that
+        makes those numbers comparable between suppliers.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/products/">Browse product records</a>
+        <a class="btn btn-secondary" href="/specifications/">Read the methodology</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PendingNotice
+        title="Data pending — supplier verification in progress"
+        body="The record collections on this site (products, applications, sizes, packaging) are defined but empty. No product, manufacturer or test-report entry has passed verification yet, so no values are published. This page describes what the database covers and how records are structured."
+      />
+
+      <div class="section-head">
+        <h2>What this database covers</h2>
+        <p>
+          Every section below is a defined collection with a strict data schema.
+          Record collections stay empty until a supplier record is verified;
+          methodology pages are published now because they describe public
+          standards rather than supplier claims.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        {
+          recordTypes.map((r) => (
+            <div class="card">
+              <h3><a href={r.href}>{r.title}</a></h3>
+              <p>{r.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>How a record earns its place</h2>
+        <p>
+          Each product record carries a <span class="mono">data_source</span>, a
+          <span class="mono">verification_status</span> and a
+          <span class="mono">last_verified</span> date. Nothing is published on a
+          supplier's word alone.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Status</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge status-unverified">Unverified</span></td>
+              <td>Claim captured from a supplier but not yet checked — not published as a record.</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-supplier">Supplier-declared</span></td>
+              <td>Values supplied by the producer; no supporting document reviewed yet.</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-third-party">Document-verified</span></td>
+              <td>Checked against a supplier document (spec sheet, packing list, certificate of analysis).</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-verified">Third-party tested</span></td>
+              <td>Confirmed by a laboratory report on a real batch sample.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">A specification without a method is not comparable.</span>
+        <p>
+          The methodology pages explain why: ash, moisture, volatile matter, fixed
+          carbon, burning time and size tolerance all depend on the method and the
+          conditions used. Start with
+          <a href="/specifications/ash-content/">ash content</a> and
+          <a href="/specifications/size-tolerance/">size tolerance</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Part of the {BRAND} network</h2>
+        <p>
+          This sub-site holds the structured data. Sourcing, manufacturer
+          verification and laboratory methodology live on the sibling sites.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3><a href={`${SITES.main}/products/`} target="_blank" rel="noopener">Product catalogue</a></h3>
+          <p>The main buying site, including ready-to-quote product pages such as coconut shell charcoal.</p>
+        </div>
+        <div class="card">
+          <h3><a href={`${SITES.testing}/`} target="_blank" rel="noopener">Testing &amp; methodology</a></h3>
+          <p>Laboratory-side detail on how each measurement is performed and reported.</p>
+        </div>
+        <div class="card">
+          <h3><a href={`${SITES.manufacturer}/`} target="_blank" rel="noopener">Manufacturer directory</a></h3>
+          <p>Producer profiles and verification records behind the product data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Need a batch-specific datasheet?</h2>
+      <p>Quote and sample requests for verified charcoal products are handled on the main site.</p>
+      <a class="btn btn-primary" href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a Quote</a>
+      <a class="btn btn-secondary" href={`${SITES.main}/request-sample/`} target="_blank" rel="noopener">Request Samples</a>
+    </div>
+  </div>
+</BaseLayout>

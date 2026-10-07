@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingNotice from '../../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site-config';
+import { SITES } from '../../lib/sites';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+/* Packaging formats are published from verified supplier records only. */
+const packaging = await getCollection('packaging');
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Packaging', path: '/packaging/' },
+];
+
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Packaging Formats"
+  description="Charcoal packaging formats: inner and outer configurations, typical minimum order quantities and private-label options. Formats are pending supplier verification."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Packaging formats</h1>
+      <p class="lede">
+        Packaging is a commercial and technical field: it fixes the order
+        multiple, the label, and how much moisture and breakage the goods take on
+        in transit.
+      </p>
+    </div>
+
+    <PendingNotice
+      title="Data pending — supplier verification in progress"
+      body="No packaging formats are published yet. A format is listed only when verified supplier records confirm the configuration, the typical minimum order quantity and whether private labelling is available."
+    />
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What a packaging entry contains</h2>
+      </div>
+      <div class="grid grid-4">
+        <div class="card">
+          <h3>Name &amp; slug</h3>
+          <p>The configuration as buyers refer to it.</p>
+        </div>
+        <div class="card">
+          <h3>Description</h3>
+          <p>Inner and outer unit, materials and typical fill.</p>
+        </div>
+        <div class="card">
+          <h3>Typical MOQ</h3>
+          <p>The order multiple that applies to the format.</p>
+        </div>
+        <div class="card">
+          <h3>Private label</h3>
+          <p>Recorded on the product record, not assumed on the format.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Format</th><th>Description</th><th>Typical MOQ</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="null" colspan="3">
+                No packaging formats yet ({packaging.length} entries) — data
+                pending, supplier verification in progress.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="meta-line">
+        Related: <a href="/specifications/moisture/">moisture</a> (why packaging
+        matters for a landed batch) and
+        <a href="/specifications/size-tolerance/">size tolerance</a> (why
+        breakage changes the size distribution).
+      </p>
+    </section>
+  </div>
+</BaseLayout>

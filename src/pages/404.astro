@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site-config';
+import { SITES, BRAND } from '../lib/sites';
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<BaseLayout
+  site={site}
+  title="Page not found"
+  description="The requested page does not exist on the Charcoal Hub data sub-site."
+  canonical={canonical}
+  noindex
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Page not found</h1>
+      <p class="lede">
+        This URL is not part of the dataset. Records exist only for verified
+        entries, and product record URLs are generated from verified product
+        data.
+      </p>
+    </div>
+
+    <section class="section">
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Looking for data</h3>
+          <p>
+            The record collections are still empty — no product, manufacturer or
+            test-report entry has passed verification yet.
+            <a href="/products/">See the product database</a> for the record schema.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Looking for methodology</h3>
+          <p>
+            The six specification pages are published:
+            <a href="/specifications/">ash content, fixed carbon, burning time,
+            moisture, volatile matter and size tolerance</a>.
+          </p>
+        </div>
+      </div>
+
+      <p class="meta-line">
+        Start from the <a href="/">home page</a>, or continue on the main
+        {' '}<a href={`${SITES.main}/`} target="_blank" rel="noopener">{BRAND} site</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
