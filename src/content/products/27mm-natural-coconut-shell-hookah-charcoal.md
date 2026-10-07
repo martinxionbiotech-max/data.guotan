@@ -60,7 +60,10 @@ for coconut shell charcoal materials — carbonized shell typically reports
 fixed carbon ≥ 70%, ash ≤ 3%, moisture ≤ 15% and volatile matter 10–15%;
 carbonization runs at 600–900 °C with a shell-to-charcoal yield around
 2–2.5 tonnes shell per tonne charcoal. Premium hookah briquette listings
-declare ash 1.6–2.2%, moisture 6–8% and fixed carbon 75–85%. See the
+declare ash 1.6–2.2%, moisture 6–8% and fixed carbon 75–85%. Public
+listings place burn time around 60 minutes per cube for the 25 mm class with
+claims up to 120 minutes, ignition at 8–12 minutes and a burn temperature near
+650 °C — all condition-dependent, none batch-verified for this size. See the
 [25 mm record](/products/25mm-natural-coconut-shell-hookah-charcoal/) for the
 full table. These are class-level references, not commitments by any supplier
 and not 27 mm batch-specific values.
