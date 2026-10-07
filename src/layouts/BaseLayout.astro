@@ -51,6 +51,7 @@ const fullTitle = site.siteKey === 'main' ? title : `${title} | ${site.name}`;
     ))}
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="container">
         <a class="brand" href="/">
@@ -85,7 +86,7 @@ const fullTitle = site.siteKey === 'main' ? title : `${title} | ${site.name}`;
       )
     }
 
-    <main>
+    <main id="main">
       <slot />
     </main>
 

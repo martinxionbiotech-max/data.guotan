@@ -76,16 +76,23 @@ const recordTypes = [
 >
   <section class="hero">
     <div class="container">
-      <p class="eyebrow">Structured charcoal database</p>
-      <h1>Charcoal product and specification data, separated from marketing claims.</h1>
-      <p class="lede">
-        {site.name} is the structured data layer of {BRAND}: product records,
-        size classes, packaging formats and the public-standard methodology that
-        makes those numbers comparable between suppliers.
-      </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="/products/">Browse product records</a>
-        <a class="btn btn-secondary" href="/specifications/">Read the methodology</a>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Structured charcoal database</p>
+          <h1>Charcoal product and specification data, separated from marketing claims.</h1>
+          <p class="lede">
+            {site.name} is the structured data layer of {BRAND}: product records,
+            size classes, packaging formats and the public-standard methodology that
+            makes those numbers comparable between suppliers.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/products/">Browse product records</a>
+            <a class="btn btn-secondary" href="/specifications/">Read the methodology</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="/images/hero-data-visualization.webp" alt="Abstract technical data visualization in slate and amber — conceptual illustration" width="1600" height="900" loading="eager" />
+        </div>
       </div>
     </div>
   </section>
@@ -98,6 +105,7 @@ const recordTypes = [
       />
 
       <div class="section-head">
+        <p class="section-kicker">01 · Schema</p>
         <h2>What this database covers</h2>
         <p>
           Every section below is a defined collection with a strict data schema.
@@ -107,7 +115,7 @@ const recordTypes = [
         </p>
       </div>
 
-      <div class="grid grid-3">
+      <div class="grid grid-3 card-indexed">
         {
           recordTypes.map((r) => (
             <div class="card">
@@ -123,6 +131,7 @@ const recordTypes = [
   <section class="section section-alt">
     <div class="container">
       <div class="section-head">
+        <p class="section-kicker">02 · Provenance</p>
         <h2>How a record earns its place</h2>
         <p>
           Each product record carries a <span class="mono">data_source</span>, a
@@ -174,6 +183,7 @@ const recordTypes = [
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <p class="section-kicker">03 · Network</p>
         <h2>Part of the {BRAND} network</h2>
         <p>
           This sub-site holds the structured data. Sourcing, manufacturer
