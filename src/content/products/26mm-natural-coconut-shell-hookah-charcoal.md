@@ -65,6 +65,18 @@ Public size-class table (coconut shell hookah charcoal):
 | 26 × 26 × 26 mm | ~64 |
 | 27 × 27 × 27 mm | ~56 |
 
+## Industry Reference Ranges
+
+Chinese-language trade and process sources give class-level reference points
+for coconut shell charcoal materials — carbonized shell typically reports
+fixed carbon ≥ 70%, ash ≤ 3%, moisture ≤ 15% and volatile matter 10–15%;
+carbonization runs at 600–900 °C with a shell-to-charcoal yield around
+2–2.5 tonnes shell per tonne charcoal. Premium hookah briquette listings
+declare ash 1.6–2.2%, moisture 6–8% and fixed carbon 75–85%. See the
+[25 mm record](/products/25mm-natural-coconut-shell-hookah-charcoal/) for the
+full table. These are class-level references, not commitments by any supplier
+and not 26 mm batch-specific values.
+
 ## Verification
 
 - Status: **Supplier-declared** — size-class data only, from a public
