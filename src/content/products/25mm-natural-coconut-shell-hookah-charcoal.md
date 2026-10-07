@@ -85,6 +85,28 @@ provides predictable burn coverage.
 Full box colour, logo, multilingual panels, barcode and batch coding. Cube sizes
 22 / 25 / 26 / 27 mm run on the same line.
 
+## Industry Reference Ranges
+
+Chinese-language trade and standard sources give the following cross-reference
+values for coconut shell charcoal materials. These are **industry-standard
+reference points, not commitments by any single supplier**:
+
+| Indicator | Reference range | Source type |
+|---|---|---|
+| Fixed carbon (carbonized shell) | ≥ 70% | Chinese carbonized-shell trade listings |
+| Moisture (carbonized shell, as-traded) | ≤ 15% | Chinese carbonized-shell trade listings |
+| Ash (carbonized shell) | ≤ 3% | Chinese carbonized-shell trade listings |
+| Volatile matter (carbonized shell) | 10–15% | Chinese carbonized-shell trade listings |
+| Carbonization temperature | 600–900 °C | Public carbonization process references |
+| Shell-to-charcoal yield | 2–2.5 t shell → 1 t charcoal | Public carbonization process references |
+| Hookah briquette ash (premium) | 1.6–2.2% | Supplier-declared industry listings |
+| Hookah briquette moisture | 6–8% | Supplier-declared industry listings |
+| Hookah briquette fixed carbon | 75–85% | Supplier-declared industry listings |
+
+These ranges describe the material class as publicly documented; a purchase
+decision must rest on the batch-specific values of the actual supplier, not on
+class-level references.
+
 ## Verification
 
 - Status: **Supplier-declared** — figures come from a public supplier listing
