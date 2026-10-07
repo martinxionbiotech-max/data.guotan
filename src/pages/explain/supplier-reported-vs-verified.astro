@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+const canonical = `${SITES.data}/explain/supplier-reported-vs-verified/`;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Explainers', url: '/explain/' },
+  { name: 'Supplier-reported vs verified', url: '/explain/supplier-reported-vs-verified/' },
+];
+
+const jsonLd = [
+  articleJsonLd({
+    id: canonical,
+    headline: 'Supplier-reported vs verified: the verification ladder',
+    description:
+      'Every value on Charcoal Hub carries a verification status. What supplier-reported, document-verified, third-party-tested and verified mean, how each is established, and how they are presented.',
+    datePublished: '2026-10-07',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd([
+    { name: 'Home', url: `${SITES.data}/` },
+    { name: 'Explainers', url: `${SITES.data}/explain/` },
+    { name: 'Supplier-reported vs verified', url: canonical },
+  ]),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Supplier-reported vs verified: the verification ladder"
+  description="Every value on Charcoal Hub carries a verification status. What supplier-reported, document-verified, third-party-tested and verified mean, how each is established, and how they are presented."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  ogType="article"
+  breadcrumbs={crumbs}
+>
+  <div class="container">
+    <div class="page-title">
+      <p class="eyebrow">Explainer</p>
+      <h1>Supplier-reported vs verified: the verification ladder</h1>
+      <p class="lede">
+        A plausible-looking number reads like a fact the moment it is published without a label.
+        Charcoal Hub assigns every value a verification status so a buyer can tell a claim from
+        an established fact. This page explains the ladder, aligned with the manufacturer
+        sub-site's four statuses.
+      </p>
+    </div>
+
+    <article class="prose">
+      <h2>The four statuses</h2>
+      <p>
+        The verification model on the
+        <a href={`${SITES.manufacturer}/verification/`} target="_blank" rel="noopener">manufacturer sub-site</a>
+        defines four statuses. A single profile can hold fields at different levels, and each is
+        labelled where it appears. The same four levels apply to product records on this
+        sub-site.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Status</th><th>What it means</th><th>How it is established</th><th>How it is presented</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge status-verified">Verified</span></td>
+              <td>A reliable source, or on-site / document verification, supports the field.</td>
+              <td>Independent source, or our own on-site inspection or document review.</td>
+              <td>Stated as a supported fact, with the source noted.</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-supplier">Supplier Reported</span></td>
+              <td>The value was provided by the supplier about themselves.</td>
+              <td>Supplier statement only — email, form, datasheet, website.</td>
+              <td>Labelled as self-reported; never stated as a verified fact.</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-third-party">Third-Party Verified</span></td>
+              <td>Independent third-party testing or certification supports the field.</td>
+              <td>Accredited lab report or certification body evidence.</td>
+              <td>Stated as third-party supported, with the evidence type noted.</td>
+            </tr>
+            <tr>
+              <td><span class="badge status-unverified">Unverified</span></td>
+              <td>The field has not yet been checked against any source.</td>
+              <td>No verification performed yet.</td>
+              <td>Shown as unconfirmed and not relied upon.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Why "supplier reported" is not a verified fact</h2>
+      <p>
+        Self-reported data is useful — it tells a buyer what a supplier claims and which claims
+        are worth testing — but it is also the easiest thing in cross-border sourcing to get
+        wrong. A monthly tonnage, a certification code or an export-market list reads like a
+        fact the moment it appears without a label. Charcoal Hub therefore labels self-reported
+        values explicitly and never silently upgrades them by proximity to verified fields.
+      </p>
+
+      <h2>How this maps to product records</h2>
+      <p>
+        On this sub-site, a product record carries a
+        <span class="mono">verification_status</span>, a <span class="mono">data_source</span>
+        and a <span class="mono">last_verified</span> date. A record whose status is
+        <em>supplier-declared</em> is published for traceability with its source listed, and is
+        presented as <em>not independently verified</em>. It is a candidate to be tested, not a
+        basis for a purchase commitment on its own.
+      </p>
+
+      <h2>What a buyer should do with a labelled value</h2>
+      <ul>
+        <li>Treat <em>unverified</em> and <em>supplier-declared</em> as prompts to request evidence, not to proceed.</li>
+        <li>For <em>third-party verified</em>, ask to see the underlying report and its report number, laboratory and date.</li>
+        <li>For <em>verified</em>, confirm which source or inspection supports the field before relying on it commercially.</li>
+      </ul>
+
+      <h2>Where to go next</h2>
+      <ul>
+        <li><a href={`${SITES.manufacturer}/verification/`} target="_blank" rel="noopener">Verification model — manufacturer sub-site</a></li>
+        <li><a href={`${SITES.manufacturer}/how-we-qualify/`} target="_blank" rel="noopener">How suppliers are qualified</a></li>
+        <li><a href="/products/">Product records with status labels</a></li>
+        <li><a href="/explain/how-to-read-a-spec-sheet/">How to read a spec sheet</a></li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>

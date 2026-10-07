@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { breadcrumbJsonLd, datasetJsonLd } from '../../lib/seo';
+
+const canonical = `${SITES.data}/explain/`;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Explainers', url: '/explain/' },
+];
+
+const explainers = [
+  {
+    title: 'How specifications are measured',
+    href: '/explain/how-specs-are-measured/',
+    body: 'The method families behind charcoal values — ASTM D1762, ASTM D3172, the ISO 181xx series, and why GB/T 12496 applies to activated carbon, not fuel.',
+  },
+  {
+    title: 'How to compare two suppliers',
+    href: '/explain/how-to-compare/',
+    body: 'A comparison is only valid when method, reporting basis and units match. How to compare suppliers field by field without being misled by a headline number.',
+  },
+  {
+    title: 'Why the test basis matters',
+    href: '/explain/test-basis-matters/',
+    body: 'Dry versus as-received: the same batch reports different numbers on each basis, and confusing the two is a common comparison error.',
+  },
+  {
+    title: 'Supplier-reported vs verified',
+    href: '/explain/supplier-reported-vs-verified/',
+    body: 'The verification ladder: what verified, supplier reported, third-party verified and unverified mean, and how each is established and presented.',
+  },
+  {
+    title: 'How to read a spec sheet',
+    href: '/explain/how-to-read-a-spec-sheet/',
+    body: 'A field-by-field walkthrough: what each entry should contain, what a missing field signals, and how to tell a specification from a marketing document.',
+  },
+];
+
+const jsonLd = [
+  datasetJsonLd({
+    id: `${SITES.data}/explain/#dataset`,
+    name: 'Charcoal specification explainers',
+    description:
+      'Plain-language explainers for B2B charcoal buyers: how specifications are measured, how to compare suppliers, why the test basis matters, the verification ladder, and how to read a spec sheet.',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: `${SITES.data}${c.url}` }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Explainers"
+  description="Plain-language explainers for B2B charcoal buyers: how specifications are measured, how to compare suppliers, why the test basis matters, the verification ladder, and how to read a spec sheet."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs}
+>
+  <div class="container">
+    <div class="page-title">
+      <h1>Explainers</h1>
+      <p class="lede">
+        The concepts behind a usable charcoal specification — how the numbers are produced,
+        how to compare them, and what a verification label actually means.
+      </p>
+    </div>
+
+    <section class="section">
+      <div class="grid grid-2">
+        {
+          explainers.map((e) => (
+            <div class="card">
+              <h3><a href={e.href}>{e.title}</a></h3>
+              <p>{e.body}</p>
+              <p class="meta-line">
+                <a class="card-link" href={e.href}>Read the explainer →</a>
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="section-head">
+        <h2>Related</h2>
+        <p>
+          The explainers sit alongside the <a href="/specifications/">specification methodology</a>{' '}
+          pages (per-metric detail) and the <a href="/products/">product records</a> (actual
+          supplier values with their status).
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

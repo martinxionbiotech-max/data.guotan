@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+const canonical = `${SITES.data}/explain/test-basis-matters/`;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Explainers', url: '/explain/' },
+  { name: 'Why the test basis matters', url: '/explain/test-basis-matters/' },
+];
+
+const jsonLd = [
+  articleJsonLd({
+    id: canonical,
+    headline: 'Why the test basis matters (dry vs as-received)',
+    description:
+      'The same charcoal can report very different moisture, ash and fixed-carbon figures depending on whether they are stated dry or as-received. What the difference means and how it changes a purchase decision.',
+    datePublished: '2026-10-07',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd([
+    { name: 'Home', url: `${SITES.data}/` },
+    { name: 'Explainers', url: `${SITES.data}/explain/` },
+    { name: 'Why the test basis matters', url: canonical },
+  ]),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Why the test basis matters: dry vs as-received"
+  description="The same charcoal can report very different moisture, ash and fixed-carbon figures depending on whether they are stated dry or as-received. What the difference means and how it changes a purchase decision."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  ogType="article"
+  breadcrumbs={crumbs}
+>
+  <div class="container">
+    <div class="page-title">
+      <p class="eyebrow">Explainer</p>
+      <h1>Why the test basis matters: dry vs as-received</h1>
+      <p class="lede">
+        "As-received" describes the material as it landed — water included. "Dry" describes it
+        after moisture is removed. The same batch reports different numbers on each basis, and
+        confusing the two is one of the most common ways a spec comparison goes wrong.
+      </p>
+    </div>
+
+    <article class="prose">
+      <h2>What the two bases mean</h2>
+      <p>
+        <strong>As-received (AR)</strong> reports a value as a percentage of the sample's mass
+        <em>including its water content</em> — the state in which it was sampled, shipped or
+        delivered. <strong>Dry basis (db)</strong> reports the same quantity as a percentage of
+        the sample's mass <em>after moisture has been driven off</em>, so water no longer dilutes
+        the other components.
+      </p>
+      <p>
+        Because water is dead weight, as-received figures for ash, volatile matter and fixed
+        carbon are all slightly <em>lower</em> than their dry-basis equivalents for the same
+        material — the fixed percentages are diluted by the moisture fraction.
+      </p>
+
+      <h2>A worked illustration</h2>
+      <p>
+        Take a charcoal with 10% moisture and, on a dry basis, 80% fixed carbon. Stated
+        as-received, that fixed-carbon figure becomes 72% (80% of the remaining 90% that is not
+        water). Neither number is wrong; they answer different questions. The dry-basis figure
+        describes the fuel's composition, while the as-received figure describes what you
+        actually bought per tonne.
+      </p>
+
+      <h2>Why it changes a purchase decision</h2>
+      <p>
+        If you are paying by weight, the as-received basis is the commercially honest one: it
+        tells you how much of each delivered tonne is water and how much is fuel. The dry basis
+        is the technically honest one: it lets you compare the fuel's intrinsic composition
+        across suppliers and batches without moisture confusing the picture.
+      </p>
+      <p>
+        A supplier quoting a dry-basis ash figure while a competitor quotes as-received can make
+        an identical product look different. Ask every supplier to state the basis next to every
+        percentage, and where possible to restate the whole proximate analysis on one agreed
+        basis.
+      </p>
+
+      <h2>How to spot an unstated basis</h2>
+      <ul>
+        <li>A moisture figure with no basis is ambiguous — moisture is itself usually stated as-received.</li>
+        <li>Fixed carbon should reconcile with moisture, volatile matter and ash on the same basis; if the four do not sum consistently, the basis is likely mixed.</li>
+        <li>A datasheet that reports ash "as-received" but fixed carbon "dry" without saying so is internally inconsistent.</li>
+      </ul>
+
+      <h2>Where to go next</h2>
+      <ul>
+        <li><a href="/explain/how-to-compare/">How to compare two suppliers</a></li>
+        <li><a href="/explain/how-to-read-a-spec-sheet/">How to read a spec sheet</a></li>
+        <li><a href="/specifications/moisture/">Moisture — specification methodology</a></li>
+        <li><a href="/specifications/fixed-carbon/">Fixed carbon — specification methodology</a></li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>

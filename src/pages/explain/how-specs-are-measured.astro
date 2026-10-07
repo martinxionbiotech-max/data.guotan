@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+const canonical = `${SITES.data}/explain/how-specs-are-measured/`;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Explainers', url: '/explain/' },
+  { name: 'How specifications are measured', url: '/explain/how-specs-are-measured/' },
+];
+
+const jsonLd = [
+  articleJsonLd({
+    id: canonical,
+    headline: 'How charcoal specifications are measured',
+    description:
+      'The method families behind charcoal specification values — ASTM D1762, ASTM D3172 and the ISO 181xx series for fuel charcoal, and why GB/T 12496 applies to activated carbon, not fuel.',
+    datePublished: '2026-10-07',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd([
+    { name: 'Home', url: `${SITES.data}/` },
+    { name: 'Explainers', url: `${SITES.data}/explain/` },
+    { name: 'How specifications are measured', url: canonical },
+  ]),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="How charcoal specifications are measured"
+  description="The method families behind charcoal specification values: ASTM D1762, ASTM D3172 and the ISO 181xx series for fuel charcoal, and why GB/T 12496 applies to activated carbon, not fuel."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  ogType="article"
+  breadcrumbs={crumbs}
+>
+  <div class="container">
+    <div class="page-title">
+      <p class="eyebrow">Explainer</p>
+      <h1>How charcoal specifications are measured</h1>
+      <p class="lede">
+        A specification value is only meaningful when you know the method family that
+        produced it. This page explains the standard families most often cited on
+        charcoal datasheets, what each one applies to, and where suppliers commonly
+        confuse them.
+      </p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-title">Methodology, not test data</span>
+      <p>
+        This page describes public standard method families in general terms. It
+        contains no {BRAND} test result and no supplier-specific value.
+      </p>
+    </div>
+
+    <article class="prose">
+      <h2>The two method families behind fuel-charcoal numbers</h2>
+      <p>
+        Most fuel-charcoal specification values come from one of two method families.
+        The first is <strong>ASTM D1762</strong>, the standard chemical-analysis method
+        for wood charcoal, which reports moisture, volatile matter, ash and (by
+        difference) fixed carbon. The second is the <strong>ASTM D3172</strong> proximate-analysis
+        family for coal and coke, where the individual determinations are split across
+        companion methods — D3173 for moisture, D3174 for ash and D3175 for volatile
+        matter — with fixed carbon again calculated by difference.
+      </p>
+      <p>
+        A third, more modern family is the <strong>ISO 181xx series for solid biofuels</strong>,
+        which mirrors the same proximate analysis (ISO 18134 for moisture, ISO 18122 for
+        ash, ISO 18123 for volatile matter). Suppliers serving markets where solid-biofuel
+        norms are recognised increasingly cite ISO rather than ASTM.
+      </p>
+
+      <h2>Where GB/T 12496 fits — and where it does not</h2>
+      <p>
+        A recurring confusion on Chinese-sourced datasheets is the citation of
+        <strong>GB/T 12496</strong>, the Chinese national standard family for
+        <em>wooden activated carbon</em> test methods. This family covers parameters such as
+        iodine number and methylene blue adsorption — properties of activated carbon used
+        in filtration — and includes an ash determination (GB/T 12496.3). It applies to the
+        activated-carbon product family, <strong>not to fuel charcoal</strong>.
+      </p>
+      <p>
+        When a fuel-charcoal supplier quotes "GB/T 12496" alongside ash or moisture, treat it
+        as a signal to ask a follow-up question: the value may genuinely have been measured
+        that way, or the supplier may have copied a method reference from an activated-carbon
+        line. The two product families are not interchangeable, and their ash specifications
+        describe different things.
+      </p>
+
+      <h2>What "measured" versus "calculated" means</h2>
+      <p>
+        Of the four proximate parameters, three are measured directly — moisture, volatile
+        matter and ash — and one, <strong>fixed carbon</strong>, is calculated as
+        <em>100% − moisture − volatile matter − ash</em>. This matters because a calculated
+        value inherits the uncertainty of its three inputs: an error in any one of them moves
+        the fixed-carbon figure. A datasheet whose four proximate numbers do not reconcile is
+        internally inconsistent.
+      </p>
+
+      <h2>Which method matters for comparability</h2>
+      <p>
+        Different method families heat samples at different temperatures and report on
+        different bases, so a value is only comparable against another value obtained by the
+        same method, on the same basis. Before comparing two suppliers, confirm the method
+        and the reporting basis — the subject of
+        <a href="/explain/test-basis-matters/">why the test basis matters</a>.
+      </p>
+
+      <h2>Where to go next</h2>
+      <ul>
+        <li><a href="/specifications/">All specification methodology pages</a> — per-metric detail</li>
+        <li><a href="/explain/how-to-read-a-spec-sheet/">How to read a spec sheet</a></li>
+        <li><a href="/explain/how-to-compare/">How to compare two suppliers</a></li>
+        <li><a href="/products/">Product database</a></li>
+        <li><a href={`${SITES.testing}/`} target="_blank" rel="noopener">Testing sub-site</a> — laboratory-side method detail</li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>

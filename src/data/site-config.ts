@@ -35,6 +35,7 @@ export const site: SiteConfig = {
     { label: 'Sizes', href: '/sizes/' },
     { label: 'Packaging', href: '/packaging/' },
     { label: 'Compare', href: '/compare/' },
+    { label: 'Explainers', href: '/explain/' },
     { label: '← Main Site', href: `${SITES.main}/`, external: true },
   ],
   footerCols: [
@@ -47,6 +48,17 @@ export const site: SiteConfig = {
         { label: 'Size classes', href: '/sizes/' },
         { label: 'Packaging', href: '/packaging/' },
         { label: 'Compare', href: '/compare/' },
+      ],
+    },
+    {
+      title: 'Explainers',
+      links: [
+        { label: 'All explainers', href: '/explain/' },
+        { label: 'How specifications are measured', href: '/explain/how-specs-are-measured/' },
+        { label: 'How to compare suppliers', href: '/explain/how-to-compare/' },
+        { label: 'Why the test basis matters', href: '/explain/test-basis-matters/' },
+        { label: 'Supplier-reported vs verified', href: '/explain/supplier-reported-vs-verified/' },
+        { label: 'How to read a spec sheet', href: '/explain/how-to-read-a-spec-sheet/' },
       ],
     },
     {

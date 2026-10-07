@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site-config';
+import { SITES, BRAND } from '../../lib/sites';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+const canonical = `${SITES.data}/explain/how-to-read-a-spec-sheet/`;
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Explainers', url: '/explain/' },
+  { name: 'How to read a spec sheet', url: '/explain/how-to-read-a-spec-sheet/' },
+];
+
+const jsonLd = [
+  articleJsonLd({
+    id: canonical,
+    headline: 'How to read a spec sheet',
+    description:
+      'A field-by-field walkthrough of a charcoal specification sheet: what each entry should contain, what a missing field signals, and how to tell a specification from a marketing document.',
+    datePublished: '2026-10-07',
+    dateModified: '2026-10-07',
+  }),
+  breadcrumbJsonLd([
+    { name: 'Home', url: `${SITES.data}/` },
+    { name: 'Explainers', url: `${SITES.data}/explain/` },
+    { name: 'How to read a spec sheet', url: canonical },
+  ]),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="How to read a spec sheet"
+  description="A field-by-field walkthrough of a charcoal specification sheet: what each entry should contain, what a missing field signals, and how to tell a specification from a marketing document."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  ogType="article"
+  breadcrumbs={crumbs}
+>
+  <div class="container">
+    <div class="page-title">
+      <p class="eyebrow">Explainer</p>
+      <h1>How to read a spec sheet</h1>
+      <p class="lede">
+        A usable spec sheet names the property, the value, the unit, the method, the basis and
+        the batch. When any of those is missing, the value cannot be compared or enforced. This
+        page walks through each field.
+      </p>
+    </div>
+
+    <article class="prose">
+      <h2>The anatomy of a usable entry</h2>
+      <p>
+        Every measured entry should contain six parts. Missing any one of them downgrades the
+        entry from a specification to a headline:
+      </p>
+      <ul>
+        <li><strong>Property</strong> — what is being described (ash, moisture, fixed carbon, size…).</li>
+        <li><strong>Value</strong> — the number, with a direction (≤, ≥, ±) rather than a bare figure.</li>
+        <li><strong>Unit</strong> — %, mm, g, kcal/kg, minutes, as appropriate.</li>
+        <li><strong>Method</strong> — the standard or procedure that produced the number.</li>
+        <li><strong>Basis</strong> — dry or as-received.</li>
+        <li><strong>Batch and laboratory</strong> — which batch, tested by whom, and when.</li>
+      </ul>
+
+      <h2>Field by field</h2>
+
+      <h3>Size and tolerance</h3>
+      <p>
+        "25 mm" is a nominal target, not a measurement. A usable size entry states the nominal
+        dimension <em>and</em> the tolerance (for example ±0.5 mm), plus how conformance is
+        checked. Without the tolerance, two suppliers quoting "25 mm" may ship noticeably
+        different products — see <a href="/specifications/size-tolerance/">size tolerance</a>.
+      </p>
+
+      <h3>Moisture</h3>
+      <p>
+        Moisture should carry a basis (usually as-received) and a drying condition. Because
+        charcoal is hygroscopic, a figure measured at origin may not describe the load as
+        delivered. Ask when and how the sample was taken — see
+        <a href="/specifications/moisture/">moisture</a>.
+      </p>
+
+      <h3>Ash</h3>
+      <p>
+        Ash should carry the method and basis. Different methods ash at different temperatures,
+        so ash figures are only comparable within a method family — see
+        <a href="/specifications/ash-content/">ash content</a>.
+      </p>
+
+      <h3>Fixed carbon</h3>
+      <p>
+        Fixed carbon is calculated by difference, so check that it reconciles with the reported
+        moisture, volatile matter and ash on the same basis. If it does not, the sheet is
+        internally inconsistent — see <a href="/specifications/fixed-carbon/">fixed carbon</a>.
+      </p>
+
+      <h3>Performance claims (burn time, ignition time, odour)</h3>
+      <p>
+        These have no universal standard. A burn-time figure is only meaningful with its test
+        conditions attached — fuel mass, apparatus, ignition method, airflow and endpoint. Treat
+        a bare "60 minutes" as a scenario, not a property — see
+        <a href="/specifications/burning-time/">burning time</a> and
+        <a href="/specifications/ignition-time/">ignition time</a>.
+      </p>
+
+      <h2>What a missing field signals</h2>
+      <p>
+        A missing method or basis is the most common red flag. It is usually not malice — it is
+        often a marketing datasheet that was never written to be enforced. The remedy is the
+        same in every case: ask for the raw report, and confirm the laboratory is independent of
+        the supplier.
+      </p>
+
+      <h2>Where to go next</h2>
+      <ul>
+        <li><a href="/explain/how-specs-are-measured/">How specifications are measured</a></li>
+        <li><a href="/explain/how-to-compare/">How to compare two suppliers</a></li>
+        <li><a href="/explain/supplier-reported-vs-verified/">Supplier-reported vs verified</a></li>
+        <li><a href="/specifications/">All specification methodology pages</a></li>
+        <li><a href="/products/">Product records</a></li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>
