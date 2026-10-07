@@ -75,6 +75,8 @@ export const site: SiteConfig = {
         ext('Testing & methodology', `${SITES.testing}/tests/ash-content/`),
         ext('Manufacturer directory', `${SITES.manufacturer}/`),
         ext('Knowledge base', `${SITES.knowledge}/`),
+        { label: 'Privacy & Data Policy', href: '/privacy/' },
+
       ],
     },
     {

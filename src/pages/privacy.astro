@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site-config';
+import { SITES, BRAND } from '../lib/sites';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Privacy & Data Policy', path: '/privacy/' },
+];
+const jsonLd = [
+  breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+---
+
+<BaseLayout
+  site={site}
+  title="Privacy & Data Policy"
+  description="Charcoal Hub Data sub-site policy: what this database publishes, how records are verified, and what data we do and do not collect."
+  canonical={canonical}
+  jsonLd={jsonLd}
+  breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
+>
+  <div class="page-title container">
+    <h1>Privacy &amp; Data Policy</h1>
+    <p class="lede">
+      This sub-site publishes structured charcoal product and specification
+      data. This page explains how that data is sourced and verified — and what
+      this site does not collect about you.
+    </p>
+  </div>
+
+  <section class="section">
+    <div class="container prose">
+      <p>Last updated: 2026-10-07</p>
+
+      <h2>1. What this database publishes</h2>
+      <p>
+        Product records, size classes, packaging formats, applications and
+        specification methodology. Every product record carries a verification
+        status and a data source. No fabricated records are published: an empty
+        field means the value is not established, and a record without a real
+        source is not published at all.
+      </p>
+
+      <h2>2. Verification statuses</h2>
+      <ul>
+        <li><strong>Supplier-declared</strong> — figures come from the supplier's own public listing; not independently tested by us.</li>
+        <li><strong>Unverified</strong> — only basic identity confirmed.</li>
+        <li><strong>Document-verified / third-party-tested</strong> — supporting documents or independent results exist.</li>
+      </ul>
+      <p>
+        Treat any value according to its stated status. Supplier-declared
+        figures are claims to verify, not facts to rely on.
+      </p>
+
+      <h2>3. What we do not collect</h2>
+      <p>
+        This sub-site runs no analytics, no tracking cookies and no advertising
+        pixels. We do not profile visitors. The hosting platform (Cloudflare
+        Pages) may keep standard technical logs for security under its own
+        policy.
+      </p>
+
+      <h2>4. Inquiries</h2>
+      <p>
+        Quote and sample requests are handled on the main site only — this
+        sub-site has no forms. See the main site
+        <a href={`${SITES.main}/privacy/`}>privacy policy</a> and
+        <a href={`${SITES.main}/terms/`}>terms of use</a> for the network-wide
+        policy. Contact: <a href="mailto:sales@guotan.com">sales@guotan.com</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
