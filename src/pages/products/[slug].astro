@@ -2,84 +2,104 @@
 /* ------------------------------------------------------------------ */
 /* /products/<slug>/ — product record detail.                          */
 /*                                                                     */
-/* getStaticPaths() returns an EMPTY array on purpose: no product      */
-/* entries exist yet (hard rule 1 — no fabricated data). Once verified */
-/* records land in src/content/products/, each one generates its own   */
-/* page here. The template below is the render used for that URL       */
-/* pattern, so it is written as a "data pending" fallback.             */
+/* Each entry in src/content/products/ generates its own page.         */
+/* No entry = no page (no fabricated records).                         */
 /* ------------------------------------------------------------------ */
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PendingNotice from '../../components/PendingNotice.astro';
 import { site } from '../../data/site-config';
 import { SITES } from '../../lib/sites';
-import { breadcrumbJsonLd } from '../../lib/seo';
+import { breadcrumbJsonLd, articleJsonLd } from '../../lib/seo';
 
-export function getStaticPaths() {
-  return [];
+export async function getStaticPaths() {
+  const entries = await getCollection('products');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, '') },
+    props: { entry },
+  }));
 }
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
 
 const crumbs = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/products/' },
-  { name: 'Product record', path: '/products/' },
+  { name: d.product_name, path: `/products/${entry.id.replace(/\.md$/, '')}/` },
 ];
 
-const canonical = `${SITES.data}/products/`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
 const jsonLd = [
+  articleJsonLd({
+    id: canonical,
+    headline: d.product_name,
+    description: `${d.product_type ?? 'Charcoal product'} — ${d.raw_material ?? 'material'} for ${d.application ?? 'application'}.`,
+    datePublished: d.last_verified,
+    dateModified: d.last_verified,
+  }),
   breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
+];
+
+const facts: Array<[string, string]> = [
+  ['Product', d.product_name],
+  ['Raw material', d.raw_material ?? 'Not declared'],
+  ['Application', d.application ?? 'Not declared'],
+  ['Size', d.size ?? 'Not declared'],
+  ['Ash', d.ash_content ?? 'Not declared'],
+  ['Moisture', d.moisture ?? 'Not declared'],
+  ['Fixed carbon', d.fixed_carbon ?? 'Not declared'],
+  ['Burning time', d.burning_time ?? 'Not declared'],
+  ['MOQ', d.minimum_order_quantity ?? 'Not declared'],
+  ['OEM', d.private_label ?? 'Not declared'],
+  ['Manufacturer', d.manufacturer_id ?? 'Not yet verified'],
+  ['Verification', d.verification_status ?? 'Not set'],
 ];
 ---
 
 <BaseLayout
   site={site}
-  title="Product record"
-  description="A charcoal product record on the Charcoal Hub data sub-site. Data pending — supplier verification in progress."
+  title={d.product_name}
+  description={`${d.product_name} — ${d.product_type ?? 'charcoal product'} (${d.application ?? 'application'}). ${d.data_source ?? ''}`}
   canonical={canonical}
   jsonLd={jsonLd}
+  ogType="article"
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
-  noindex
 >
   <div class="container">
     <div class="page-title">
-      <h1>Product record</h1>
-      <p class="lede">
-        Product records live at <span class="mono">/products/&lt;slug&gt;/</span>
-        and are generated only for verified entries in the products collection.
-      </p>
+      <p class="eyebrow">Product record</p>
+      <h1>{d.product_name}</h1>
     </div>
 
-    <PendingNotice
-      title="Data pending — supplier verification in progress"
-      body="No product record matches this URL. Each record is generated from a verified entry in the products collection: identity, material, dimensions, measured properties, packaging, MOQ and provenance. Until an entry passes verification, no page is generated and no value is displayed."
-    />
-
-    <section class="section">
-      <div class="section-head">
-        <h2>What a record page will contain</h2>
-      </div>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Record body</h3>
-          <p>
-            Identity and material, form and dimensions, measured properties
-            (ash, moisture, fixed carbon, volatile matter, burning time,
-            ignition time), sensory and thermal notes, commercial terms.
-          </p>
+    <div class="quick-facts">
+      {facts.map(([label, value]) => (
+        <div class="qf">
+          <span class="qf-label">{label}</span>
+          <span class="qf-value">{value}</span>
         </div>
-        <div class="card">
-          <h3>Record gate</h3>
-          <p>
-            Data source, verification status and last-verified date travel with
-            every field group, so a reader always knows what backs a value.
-          </p>
-        </div>
-      </div>
+      ))}
+    </div>
 
-      <p class="meta-line">
-        See the <a href="/products/">product database index</a> for the field
-        schema, or <a href="/specifications/">the methodology pages</a> for how
-        each metric is measured.
-      </p>
-    </section>
+    <div class="callout">
+      <span class="callout-title">Verification: {d.verification_status ?? 'not set'}</span>
+      <span>
+        Values carry a verification status and a data source. Nothing on this
+        page is presented as CHARCOAL HUB test data unless it is labelled as
+        such. Source: {d.data_source ?? 'not recorded'}. Last verified:{' '}
+        {d.last_verified ?? 'never'}.
+      </span>
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <p class="meta-line">
+      <a href="/products/">All product records</a> ·{' '}
+      <a href={`${SITES.main}/request-sample/`}>Request a sample</a> ·{' '}
+      <a href={`${SITES.main}/request-quote/`}>Request a quote</a>
+    </p>
   </div>
 </BaseLayout>
