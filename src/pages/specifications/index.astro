@@ -31,7 +31,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Specification Methodology"
-  description="What each charcoal metric means and how it is measured: ash content, fixed carbon, burning time, moisture, volatile matter and size tolerance, per public standards."
+  description="What each charcoal metric means and how it is measured: ash content, fixed carbon, burning time, moisture, volatile matter, size tolerance, odor and ignition time, per public standards."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -40,7 +40,7 @@ const jsonLd = [
     <div class="page-title">
       <h1>Specification methodology</h1>
       <p class="lede">
-        Six pages covering the measurements that appear on a charcoal datasheet.
+        Eight pages covering the measurements that appear on a charcoal datasheet.
         Each explains what the metric measures, why it matters, the general method
         used, what a buyer should ask for, and where the measurement breaks down.
       </p>
@@ -78,8 +78,9 @@ const jsonLd = [
           <h2>How the metrics fit together</h2>
           <p>
             Moisture, volatile matter and ash are measured directly; fixed carbon
-            is calculated from them. Burning time and size tolerance describe
-            physical behaviour rather than chemistry.
+            is calculated from them. Burning time, size tolerance, odor and
+            ignition time describe physical behaviour and user experience rather
+            than chemistry.
           </p>
         </div>
         <div class="grid grid-3">
@@ -102,8 +103,10 @@ const jsonLd = [
           <div class="card">
             <h3>Physical performance</h3>
             <p>
-              <a href="/specifications/burning-time/">Burning time</a> and
-              <a href="/specifications/size-tolerance/">size tolerance</a> — no
+              <a href="/specifications/burning-time/">Burning time</a>,
+              <a href="/specifications/size-tolerance/">size tolerance</a>,
+              <a href="/specifications/odor/">odor</a> and
+              <a href="/specifications/ignition-time/">ignition time</a> — no
               universal standard; conditions must travel with the figure.
             </p>
           </div>

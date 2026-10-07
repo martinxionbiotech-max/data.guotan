@@ -40,6 +40,8 @@ Content licence: public methodology pages may be cited with attribution to ${BRA
 - [Moisture](${origin}/specifications/moisture/): water content by oven-dry method (ISO 18134).
 - [Volatile matter](${origin}/specifications/volatile-matter/): gas/vapour released without air (ISO 18123).
 - [Size tolerance](${origin}/specifications/size-tolerance/): permitted dimensional deviation from a nominal size class.
+- [Odor](${origin}/specifications/odor/): sensory character during lighting and combustion; a hookah experience metric.
+- [Ignition time](${origin}/specifications/ignition-time/): time from an ignition source to a fully lit, usable state.
 
 ## Sibling sites
 
