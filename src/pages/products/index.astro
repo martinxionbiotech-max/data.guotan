@@ -6,7 +6,7 @@ import { site } from '../../data/site-config';
 import { SITES, BRAND } from '../../lib/sites';
 import { breadcrumbJsonLd, datasetJsonLd } from '../../lib/seo';
 
-/* Products collection is intentionally empty (no fabricated entries). */
+/* Products collection: 3 published records (supplier-declared). */
 const products = await getCollection('products');
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -66,7 +66,7 @@ const jsonLd = [
     id: `${SITES.data}/products/#dataset`,
     name: 'Charcoal product records',
     description:
-      'Structured charcoal product records with material, dimensional, measured-property and commercial fields. Empty until supplier verification is complete.',
+      'Structured charcoal product records with material, dimensional, measured-property and commercial fields. Supplier-declared values are published with that label until independently verified.',
   }),
   breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
 ];

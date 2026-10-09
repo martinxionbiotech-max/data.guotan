@@ -38,8 +38,8 @@ const jsonLd = [
     </div>
 
     <PendingNotice
-      title="Data pending — supplier verification in progress"
-      body="No application entries are published yet. Each entry is written from verified product records — the raw materials actually in the database and the specifications that are actually measured — so the index stays empty until that evidence exists."
+      title={`${applications.length} application entries published (supplier-declared)`}
+      body="Application entries are written from published product records — the raw materials actually in the database and the specifications that are actually measured. Entries carry a verification status; most values are supplier-declared until independently verified."
     />
 
     <section class="section">

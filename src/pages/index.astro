@@ -1,9 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PendingNotice from '../components/PendingNotice.astro';
+import { getCollection } from 'astro:content';
 import { site } from '../data/site-config';
 import { SITES, BRAND } from '../lib/sites';
 import { breadcrumbJsonLd, datasetJsonLd, webSiteJsonLd, organizationJsonLd } from '../lib/seo';
+
+const products = await getCollection('products');
+const applications = await getCollection('applications');
+const sizes = await getCollection('sizes');
+const packaging = await getCollection('packaging');
+const recordCount = products.length + applications.length + sizes.length + packaging.length;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const crumbs = [{ name: 'Home', path: '/' }];
@@ -99,19 +105,25 @@ const recordTypes = [
 
   <section class="section">
     <div class="container">
-      <PendingNotice
-        title="Data pending — supplier verification in progress"
-        body="The record collections on this site (products, applications, sizes, packaging) are defined but empty. No product, manufacturer or test-report entry has passed verification yet, so no values are published. This page describes what the database covers and how records are structured."
-      />
+      <div class="callout">
+        <span class="callout-title">Published records: {recordCount}</span>
+        <p>
+          {products.length} products, {applications.length} applications,
+          {sizes.length} size classes and {packaging.length} packaging formats are
+          published today. Each carries a verification status and data source;
+          values labelled supplier-declared come from public supplier listings and
+          have not been independently tested by CHARCOAL HUB.
+        </p>
+      </div>
 
       <div class="section-head">
         <p class="section-kicker">01 · Schema</p>
         <h2>What this database covers</h2>
         <p>
           Every section below is a defined collection with a strict data schema.
-          Record collections stay empty until a supplier record is verified;
-          methodology pages are published now because they describe public
-          standards rather than supplier claims.
+          Records are published with a verification status attached — most values
+          are currently supplier-declared. Methodology pages are published now
+          because they describe public standards rather than supplier claims.
         </p>
       </div>
 
@@ -149,19 +161,19 @@ const recordTypes = [
           <tbody>
             <tr>
               <td><span class="badge status-unverified">Unverified</span></td>
-              <td>Claim captured from a supplier but not yet checked — not published as a record.</td>
+              <td>Evidence level A — claim captured but not yet checked against any source.</td>
             </tr>
             <tr>
               <td><span class="badge status-supplier">Supplier-declared</span></td>
-              <td>Values supplied by the producer; no supporting document reviewed yet.</td>
+              <td>Evidence level B — values supplied by the producer; no supporting document reviewed yet.</td>
             </tr>
             <tr>
               <td><span class="badge status-third-party">Document-verified</span></td>
-              <td>Checked against a supplier document (spec sheet, packing list, certificate of analysis).</td>
+              <td>Evidence level C — checked against a supplier document (spec sheet, packing list, certificate of analysis).</td>
             </tr>
             <tr>
               <td><span class="badge status-verified">Third-party tested</span></td>
-              <td>Confirmed by a laboratory report on a real batch sample.</td>
+              <td>Evidence level F — a laboratory report on a real batch sample, traceable by report number.</td>
             </tr>
           </tbody>
         </table>

@@ -40,7 +40,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Compare Products"
-  description="Compare charcoal product records field by field — material, size, ash, moisture, fixed carbon, burning time, packaging and MOQ. Comparison is empty pending supplier verification."
+  description="Compare charcoal product records field by field — material, size, ash, moisture, fixed carbon, burning time, packaging and MOQ. Records are supplier-declared until independently verified."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -49,7 +49,7 @@ const jsonLd = [
     <div class="page-title">
       <h1>Compare products</h1>
       <p class="lede">
-        A side-by-side view of verified product records on the fields that decide
+        A side-by-side view of product records on the fields that decide
         a purchase. Comparison only ever shows recorded values — an empty cell
         means the value is not established, not that it is zero.
       </p>
@@ -63,7 +63,7 @@ const jsonLd = [
     <section class="section">
       <div class="section-head">
         <h2>Comparison table</h2>
-        <p>Rows appear as verified records are published.</p>
+        <p>Rows appear as records are published; values shown are supplier-declared unless the row's status says otherwise.</p>
       </div>
 
       <div class="table-wrap">
