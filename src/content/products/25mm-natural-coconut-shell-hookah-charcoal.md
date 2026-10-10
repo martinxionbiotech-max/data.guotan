@@ -1,6 +1,6 @@
 ---
 product_id: p-25mm-coconut-hookah
-product_name: "25mm Natural Coconut Shell Hookah Charcoal Cubes"
+product_name: "25mm Natural Coconut Hookah Charcoal Cubes"
 product_type: "Coconut shell charcoal briquettes (hookah/shisha)"
 application: "Hookah / shisha water-pipe fuel"
 raw_material: "Coconut shell"
