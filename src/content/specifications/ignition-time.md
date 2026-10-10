@@ -64,5 +64,5 @@ light faster but smoke more.
 - The piece size and the moisture figure, since both move ignition time.
 - A sample for a controlled lighting test on the buyer's own burner.
 
-For batch-specific performance data, [request a sample](https://guotan.com/request-sample/);
-for the laboratory view, see the [testing sub-site](https://testing.guotan.com/tests/burning-time/).
+For batch-specific performance data, [request a sample](https://chinacharcoalhub.com/request-sample/);
+for the laboratory view, see the [testing sub-site](https://testing.chinacharcoalhub.com/tests/burning-time/).

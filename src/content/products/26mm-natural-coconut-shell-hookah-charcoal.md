@@ -88,6 +88,6 @@ and not 26 mm batch-specific values.
 
 ## Related
 
-- [Compare: 25mm vs 26mm Charcoal](https://knowledge.guotan.com/knowledge/25mm-vs-26mm-charcoal/)
+- [Compare: 25mm vs 26mm Charcoal](https://knowledge.chinacharcoalhub.com/knowledge/25mm-vs-26mm-charcoal/)
 - [Specification: Burning Time](/specifications/burning-time/)
-- [Request a Sample](https://guotan.com/request-sample/)
+- [Request a Sample](https://chinacharcoalhub.com/request-sample/)

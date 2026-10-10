@@ -61,5 +61,5 @@ lights less cleanly and releases more start-up steam and smell.
 - The moisture figure, and how packaging controls it in transit.
 - A sample batch for a blind session test in the buyer's own hardware.
 
-For batch-specific performance data, [request a sample](https://guotan.com/request-sample/);
-for the laboratory view, see the [testing sub-site](https://testing.guotan.com/tests/volatile-matter/).
+For batch-specific performance data, [request a sample](https://chinacharcoalhub.com/request-sample/);
+for the laboratory view, see the [testing sub-site](https://testing.chinacharcoalhub.com/tests/volatile-matter/).

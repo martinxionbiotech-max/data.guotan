@@ -3,7 +3,7 @@ import { SITES } from '../lib/sites';
 
 /* ------------------------------------------------------------------ */
 /* robots.txt — AI-crawler friendly.                                   */
-/* data.guotan.com is a public, structured, citable dataset: */
+/* data.chinacharcoalhub.com is a public, structured, citable dataset: */
 /* search and AI crawlers are explicitly allowed.                      */
 /* ------------------------------------------------------------------ */
 
@@ -35,7 +35,7 @@ export const GET: APIRoute = () => {
   const origin = SITES.data;
 
   const lines: string[] = [
-    '# robots.txt for data.guotan.com',
+    '# robots.txt for data.chinacharcoalhub.com',
     '# Structured charcoal product and specification dataset.',
     '# Public, citable content: AI and search crawlers are welcome.',
     '',

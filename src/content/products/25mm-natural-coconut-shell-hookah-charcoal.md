@@ -123,5 +123,5 @@ class-level references.
 - [Specification: Ash Content](/specifications/ash-content/)
 - [Specification: Moisture](/specifications/moisture/)
 - [Specification: Fixed Carbon](/specifications/fixed-carbon/)
-- [Request a Sample](https://guotan.com/request-sample/)
-- [Request a Quote](https://guotan.com/contact/)
+- [Request a Sample](https://chinacharcoalhub.com/request-sample/)
+- [Request a Quote](https://chinacharcoalhub.com/contact/)

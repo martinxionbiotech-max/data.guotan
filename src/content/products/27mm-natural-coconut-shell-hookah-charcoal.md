@@ -78,4 +78,4 @@ and not 27 mm batch-specific values.
 
 - [Specification: Burning Time](/specifications/burning-time/)
 - [Specification: Size Tolerance](/specifications/size-tolerance/)
-- [Request a Sample](https://guotan.com/request-sample/)
+- [Request a Sample](https://chinacharcoalhub.com/request-sample/)
