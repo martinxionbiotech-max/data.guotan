@@ -9,7 +9,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../data/site-config';
 import { SITES } from '../../lib/sites';
-import { breadcrumbJsonLd, articleJsonLd } from '../../lib/seo';
+import { breadcrumbJsonLd, articleJsonLd, productJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -32,12 +32,22 @@ const crumbs = [
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 const jsonLd = [
-  articleJsonLd({
+  productJsonLd({
     id: canonical,
-    headline: d.product_name,
-    description: `${d.product_type ?? 'Charcoal product'} — ${d.raw_material ?? 'material'} for ${d.application ?? 'application'}.`,
-    datePublished: d.last_verified,
-    dateModified: d.last_verified,
+    name: d.product_name,
+    description: `${d.product_name} — ${d.product_type ?? 'charcoal product'} for ${d.application ?? 'application'}. ${d.verification_status ?? 'Verification pending'} record.`,
+    brand: d.product_name.split(' ')[0] ?? undefined,
+    category: d.product_type ?? undefined,
+    properties: [
+      { name: 'Raw material', value: d.raw_material ?? 'Not declared' },
+      { name: 'Size', value: d.size ?? 'Not declared' },
+      { name: 'Ash content', value: d.ash_content ?? 'Not declared' },
+      { name: 'Moisture', value: d.moisture ?? 'Not declared' },
+      { name: 'Burning time', value: d.burning_time ?? 'Not declared' },
+      { name: 'Ignition time', value: d.ignition_time ?? 'Not declared' },
+      { name: 'Packaging', value: d.packaging ?? 'Not declared' },
+      { name: 'Verification status', value: d.verification_status ?? 'Not set' },
+    ],
   }),
   breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, url: new URL(c.path, Astro.site).href }))),
 ];
@@ -72,6 +82,20 @@ const facts: Array<[string, string]> = [
       <p class="eyebrow">Product record</p>
       <h1>{d.product_name}</h1>
     </div>
+
+    {
+      d.product_id?.startsWith('p-firemax') && (
+        <div class="page-title-media">
+          <img
+            src={`/images/products/firemax-${d.product_id.replace('p-firemax-', '').replace('-bamboo-cube', '').replace('-instant-light-tablet', '').replace('-silver-bar', '')}.${d.product_id.includes('rb33') ? 'jpeg' : 'png'}`}
+            alt={`${d.product_name} — supplier product photo`}
+            width="800"
+            height="800"
+            loading="lazy"
+          />
+        </div>
+      )
+    }
 
     <div class="quick-facts">
       {facts.map(([label, value]) => (
