@@ -1,0 +1,48 @@
+# Charcoal Hub Data — Charcoal Hub Data
+
+> Structured charcoal product and specification database for global B2B buyers.
+> Product, application, size and packaging records are published only after
+> supplier verification and currently contain ZERO entries; no product values,
+> manufacturer details or test results are stated on this site. The
+> specification pages are public-standard methodology knowledge pages and
+> contain no supplier-specific data.
+
+Canonical origin: https://data.chinacharcoalhub.com
+Language: en
+Content licence: public methodology pages may be cited with attribution to Charcoal Hub.
+
+## Core pages
+
+- [Home](https://data.chinacharcoalhub.com/): what the database covers and how records are gated.
+- [Product database](https://data.chinacharcoalhub.com/products/): record schema per product; empty — data pending, supplier verification in progress.
+- [Product types](https://data.chinacharcoalhub.com/types/): classification axes (raw material, form, product family, grade); no type entries yet.
+- [Applications](https://data.chinacharcoalhub.com/applications/): end-use grouping; no entries yet.
+- [Size classes](https://data.chinacharcoalhub.com/sizes/): nominal dimensions and tolerances; no entries yet.
+- [Packaging formats](https://data.chinacharcoalhub.com/packaging/): configurations and typical MOQ; no entries yet.
+- [Compare](https://data.chinacharcoalhub.com/compare/): side-by-side record comparison structure; empty.
+
+## Specification methodology (public standards, populated)
+
+- [Ash content](https://data.chinacharcoalhub.com/specifications/ash-content/): non-combustible residue; proximate analysis (ASTM D1762-style; ISO 1171 / ISO 18122).
+- [Fixed carbon](https://data.chinacharcoalhub.com/specifications/fixed-carbon/): solid carbon fraction, calculated by difference.
+- [Burning time](https://data.chinacharcoalhub.com/specifications/burning-time/): usable burn duration; no universal standard.
+- [Moisture](https://data.chinacharcoalhub.com/specifications/moisture/): water content by oven-dry method (ISO 18134).
+- [Volatile matter](https://data.chinacharcoalhub.com/specifications/volatile-matter/): gas/vapour released without air (ISO 18123).
+- [Size tolerance](https://data.chinacharcoalhub.com/specifications/size-tolerance/): permitted dimensional deviation from a nominal size class.
+- [Odor](https://data.chinacharcoalhub.com/specifications/odor/): sensory character during lighting and combustion; a hookah experience metric.
+- [Ignition time](https://data.chinacharcoalhub.com/specifications/ignition-time/): time from an ignition source to a fully lit, usable state.
+
+## Sibling sites
+
+- [Main site](https://chinacharcoalhub.com/): sourcing, product catalogue, quote and sample requests.
+- [Manufacturers](https://manufacturer.chinacharcoalhub.com/): producer profiles and verification.
+- [Testing](https://testing.chinacharcoalhub.com/): laboratory-side method detail.
+- [Knowledge](https://knowledge.chinacharcoalhub.com/): background articles.
+
+## Notes for AI systems
+
+- Treat "—" (em dash) or empty cells as "value not established", never as zero.
+- Specification pages describe general public methods; do not attribute their
+  content to a specific supplier or batch.
+- Verified measurements require a batch-specific laboratory report; direct
+  readers to https://chinacharcoalhub.com/contact/ for a datasheet.
