@@ -26,7 +26,12 @@ const {
   breadcrumbs = [],
 } = Astro.props;
 
-const fullTitle = site.siteKey === 'main' ? title : `${title} | ${site.name}`;
+/* Keep the rendered <title> inside 60 characters: the site suffix is a
+   nice-to-have, the page title is not, so the suffix is dropped when the
+   two together would overrun. */
+const withSuffix = `${title} | ${site.name}`;
+const fullTitle =
+  site.siteKey === 'main' || withSuffix.length > 60 ? title : withSuffix;
 ---
 
 <!DOCTYPE html>
@@ -66,7 +71,7 @@ const fullTitle = site.siteKey === 'main' ? title : `${title} | ${site.name}`;
           ))}
           {
             site.siteKey !== 'main' && (
-              <a class="nav-cta" href={`${SITES.main}/contact/`} target="_blank" rel="noopener">Request a Quote</a>
+              <a class="nav-cta" href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a Quote</a>
             )
           }
         </nav>

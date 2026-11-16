@@ -1,15 +1,16 @@
 ---
 product_id: p-26mm-coconut-hookah
 product_name: "26mm Natural Coconut Hookah Charcoal Cubes"
+meta_description: "26mm natural coconut shell hookah charcoal cubes: size-class record with pieces per kg, source and status. Batch chemistry is not yet published."
 product_type: "Coconut shell charcoal briquettes (hookah/shisha)"
 application: "Hookah / shisha water-pipe fuel"
 raw_material: "Coconut shell"
 charcoal_source: "Natural coconut shell, carbonized and pressed into cube briquettes"
 shape: "Cube"
 size: "26 × 26 × 26 mm (nominal)"
-length: null
-width: null
-height: null
+length: "26 mm (nominal)"
+width: "26 mm (nominal)"
+height: "26 mm (nominal)"
 diameter: null
 ash_content: null
 moisture: null
@@ -20,6 +21,7 @@ ignition_time: null
 odor: null
 spark_level: null
 temperature: null
+calorific_value: null
 packaging: null
 private_label: null
 minimum_order_quantity: null
@@ -31,10 +33,49 @@ manufacturer_id: null
 last_verified: "2026-10-07"
 data_source: "https://charcoal.pro/coconut-charcoal-for-shisha-specification-price (public size-class table; 26 mm = ~64 cubes per kg)"
 verification_status: supplier-declared
+
+pending_fields:
+  - field: ash_content
+    reason: "No batch datasheet for the 26 mm class; the source is a size-class table, not a product specification."
+  - field: moisture
+    reason: "No batch datasheet for the 26 mm class."
+  - field: fixed_carbon
+    reason: "No batch datasheet for the 26 mm class."
+  - field: volatile_matter
+    reason: "No batch datasheet for the 26 mm class."
+  - field: burning_time
+    reason: "Not stated per size; class-level figures for 25 mm cannot be transferred to 26 mm without a test."
+  - field: ignition_time
+    reason: "Not stated per size; ignition depends on the burner and the batch, not on the nominal size alone."
+  - field: odor
+    reason: "Sensory property; no claim published for this class."
+  - field: spark_level
+    reason: "Not stated for this class."
+  - field: temperature
+    reason: "No burn-temperature measurement published."
+  - field: calorific_value
+    reason: "No calorific value published for the 26 mm class."
+  - field: packaging
+    reason: "Pack format not stated in the size-class source; ask the supplier before quoting a carton count."
+  - field: private_label
+    reason: "Private-label availability is not stated for this class in the source."
+  - field: minimum_order_quantity
+    reason: "No MOQ published for this class."
+  - field: production_capacity
+    reason: "No capacity figure published."
+  - field: testing_available
+    reason: "No statement on batch testing for this class."
+  - field: certifications
+    reason: "No certificate supplied; the size-class table carries none."
+  - field: origin
+    reason: "Country of origin is not stated in the size-class table; not inferred from the domain."
+  - field: manufacturer_id
+    reason: "The source is a size-class table, not a manufacturer record."
+
+not_applicable:
+  - field: diameter
+    reason: "Cube format: the three edge dimensions are recorded in length, width and height."
 ---
-
-# 26mm Natural Coconut Shell Hookah Charcoal Cubes
-
 ## Quick Facts
 
 | Field | Value |

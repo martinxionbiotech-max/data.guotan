@@ -2,16 +2,17 @@
 /* CHARCOAL HUB — data.guotan content collections.                     */
 /*                                                                     */
 /* Five collections, all strict zod schemas:                           */
-/*   products       — verified supplier product records   (0 entries)  */
-/*   specifications — public-standard methodology pages   (6 entries)  */
-/*   applications   — application taxonomy                (0 entries)  */
-/*   sizes          — nominal size classes                (0 entries)  */
-/*   packaging      — packaging formats                   (0 entries)  */
+/*   products       — supplier product records          (7 entries)    */
+/*   specifications — public-standard methodology pages (8 entries)    */
+/*   applications   — application taxonomy              (2 entries)    */
+/*   sizes          — nominal size classes              (3 entries)    */
+/*   packaging      — packaging formats                 (2 entries)    */
 /*                                                                     */
-/* HARD RULE: no fabricated data. The record collections are defined   */
-/* with complete §7 schemas but contain ZERO entries until a supplier  */
-/* record is verified. Pages render "data pending — supplier           */
-/* verification in progress" instead of invented values.               */
+/* HARD RULE: no fabricated data. A field that is not established is   */
+/* left null — never estimated — and every null product field must be  */
+/* explained either in pending_fields (someone still owes the value)   */
+/* or in not_applicable (the field cannot exist for this product       */
+/* form). The data gate enforces that coverage.                        */
 /* ------------------------------------------------------------------ */
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
@@ -30,6 +31,23 @@ const isoDate = () =>
     .nullable()
     .default(null);
 
+/** Why a field on a record is still empty, and who owes the value. */
+const pendingField = z
+  .object({
+    field: z.string().min(1),
+    reason: z.string().min(1),
+    owner: z.string().min(1).optional(),
+  })
+  .strict();
+
+/** Why a field can never apply to this record's physical form. */
+const notApplicable = z
+  .object({
+    field: z.string().min(1),
+    reason: z.string().min(1),
+  })
+  .strict();
+
 /* Aligned with the verification ladder used across CHARCOAL HUB. */
 export const VERIFICATION_STATUSES = [
   'unverified',
@@ -47,6 +65,9 @@ const products = defineCollection({
     .object({
       product_id: z.string().min(1),
       product_name: z.string().min(1),
+      /* Standalone meta description: written, not derived, so it stays
+         inside the SERP limit while naming the real material and status. */
+      meta_description: z.string().min(80).max(160),
       product_type: unknown(),
 
       application: unknown(),
@@ -70,6 +91,7 @@ const products = defineCollection({
       odor: unknown(),
       spark_level: unknown(),
       temperature: unknown(),
+      calorific_value: unknown(),
 
       packaging: unknown(),
       private_label: unknown(),
@@ -84,6 +106,10 @@ const products = defineCollection({
       last_verified: isoDate(),
       data_source: unknown(),
       verification_status: z.enum(VERIFICATION_STATUSES).nullable().default(null),
+
+      /* Every null field above is accounted for here. */
+      pending_fields: z.array(pendingField).default([]),
+      not_applicable: z.array(notApplicable).default([]),
     })
     .strict(),
 });
@@ -121,6 +147,8 @@ const applications = defineCollection({
       description: z.string().min(1),
       related_raw_materials: z.array(z.string().min(1)).nullable().default(null),
       related_specifications: z.array(z.string().min(1)).nullable().default(null),
+      last_updated: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      data_source: z.string().min(1),
     })
     .strict(),
 });
@@ -135,6 +163,12 @@ const sizes = defineCollection({
       diameter_mm: z.number().positive().nullable().default(null),
       description: z.string().min(1),
       typical_products: z.array(z.string().min(1)).nullable().default(null),
+      pieces_per_kg: z.number().int().positive().nullable().default(null),
+      tolerance: z.string().min(1).nullable().default(null),
+      last_verified: isoDate(),
+      data_source: z.string().min(1),
+      verification_status: z.enum(VERIFICATION_STATUSES).nullable().default(null),
+      pending_fields: z.array(pendingField).default([]),
     })
     .strict(),
 });
@@ -148,6 +182,9 @@ const packaging = defineCollection({
       slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
       description: z.string().min(1),
       typical_moq: z.string().min(1).nullable().default(null),
+      last_verified: isoDate(),
+      data_source: z.string().min(1),
+      verification_status: z.enum(VERIFICATION_STATUSES).nullable().default(null),
     })
     .strict(),
 });

@@ -1,7 +1,7 @@
 ---
 title: "Ignition Time of Charcoal"
 slug: ignition-time
-description: "What ignition time means for hookah charcoal, why it is a system property rather than a fixed figure, how natural and quick-light products differ, and how buyers should compare it."
+description: "What ignition time means for hookah charcoal, why it is a system property, how natural and quick-light products differ, and how to compare figures."
 metric: "Ignition time — the duration from applying an ignition source to the charcoal reaching a fully lit, evenly glowing, usable state."
 what_it_measures: >-
   Ignition time describes how long a charcoal takes to go from cold to fully

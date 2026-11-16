@@ -1,7 +1,7 @@
 ---
 title: "Size Tolerance in Charcoal"
 slug: size-tolerance
-description: "What dimensional tolerance means for charcoal size classes such as 25 mm and 26 mm cubes, why consistency matters for packaging and burn, and how it is measured."
+description: "What dimensional tolerance means for charcoal size classes such as 25 mm cubes, why consistency matters for packing and burn, and how it is measured."
 metric: "Size tolerance — the permitted dimensional deviation of individual pieces from a nominal size class (for example a nominal 25 mm or 26 mm cube)."
 what_it_measures: >-
   Size tolerance describes how close real pieces are to the size they are sold as.

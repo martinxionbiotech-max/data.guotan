@@ -40,7 +40,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Compare Products"
-  description="Compare charcoal product records field by field — material, size, ash, moisture, fixed carbon, burning time, packaging and MOQ. Records are supplier-declared until independently verified."
+  description="Compare charcoal product records field by field: material, size, ash, moisture, fixed carbon, burning time, packaging and MOQ, each with its status."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -113,7 +113,7 @@ const jsonLd = [
 
       <p class="meta-line">
         Need a batch datasheet to compare against?{' '}
-        <a href={`${SITES.main}/contact/`} target="_blank" rel="noopener">Request a quote</a>{' '}
+        <a href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a quote</a>{' '}
         on the main {BRAND} site, or{' '}
         <a href={`${SITES.main}/request-sample/`} target="_blank" rel="noopener">request samples</a>.
       </p>

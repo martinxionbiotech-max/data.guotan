@@ -3,6 +3,9 @@ name: "10 kg Bulk Pack"
 slug: 10kg-bulk-pack
 description: "Bulk retail format for hookah charcoal, 10 kg per pack. Also used as master-carton weight (10 or 20 kg, customer-specified)."
 typical_moq: "1 tonne"
+last_verified: "2026-10-07"
+data_source: "https://bbqoncharcoal.com/product/25mm-hookah-charcoal/ (public supplier listing; format and MOQ are supplier-declared)"
+verification_status: supplier-declared
 ---
 
 # 10 kg Bulk Pack

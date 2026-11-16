@@ -6,8 +6,15 @@ import { site } from '../../data/site-config';
 import { SITES } from '../../lib/sites';
 import { breadcrumbJsonLd } from '../../lib/seo';
 
-/* Size classes are published from verified product records only. */
+/* Size classes are published from supplier size-class records, each with
+   its own provenance line and a pending reason for any empty field. */
 const sizes = await getCollection('sizes');
+const products = await getCollection('products');
+
+/* Match a size class to the product records that ship in it, by name. */
+const productByName = new Map(products.map((p) => [p.data.product_name, p.id.replace(/\.md$/, '')]));
+const linksFor = (names: string[] | null) =>
+  (names ?? []).map((n) => ({ name: n, slug: productByName.get(n) ?? null }));
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const crumbs = [
@@ -23,7 +30,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Size Classes"
-  description="Charcoal size classes: nominal dimensions in millimetres, tolerance expectations and the products typically sold in each class. Classes are pending supplier verification."
+  description="Charcoal size classes: nominal dimensions in millimetres, pieces per kilogram, the products that ship in each class and the source behind them."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -39,7 +46,7 @@ const jsonLd = [
 
     <PendingNotice
       title={`${sizes.length} size classes published (supplier-declared)`}
-      body="A class is listed here when product records actually ship in it, with the tolerance range measured rather than assumed. Entries carry a verification status; most values are supplier-declared until independently verified."
+      body="Each class carries its nominal dimension, the piece count published for it, the product records that ship in it and a verification status. Where a tolerance range has not been measured, the cell says data pending instead of implying a precision nobody has demonstrated."
     />
 
     <section class="section">
@@ -56,15 +63,48 @@ const jsonLd = [
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Size class</th><th>Nominal dimension</th><th>Products</th><th>Notes</th></tr>
+            <tr>
+              <th>Size class</th>
+              <th>Nominal dimension</th>
+              <th>Pieces per kg</th>
+              <th>Products</th>
+              <th>Tolerance</th>
+              <th>Status</th>
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="null" colspan="4">
-                No size classes yet ({sizes.length} entries) — data pending,
-                supplier verification in progress.
-              </td>
-            </tr>
+            {
+              sizes.length === 0 ? (
+                <tr>
+                  <td class="null" colspan="6">
+                    No size classes yet — data pending, supplier verification in
+                    progress.
+                  </td>
+                </tr>
+              ) : (
+                sizes.map((s) => (
+                  <tr>
+                    <td>{s.data.name}</td>
+                    <td class="spec-value">{s.data.diameter_mm !== null ? `${s.data.diameter_mm} mm` : '—'}</td>
+                    <td class="spec-value">
+                      {s.data.pieces_per_kg !== null ? `~${s.data.pieces_per_kg}` : 'data pending'}
+                    </td>
+                    <td class="spec-value">
+                      {linksFor(s.data.typical_products).length === 0
+                        ? '—'
+                        : linksFor(s.data.typical_products).map((p, i) => (
+                            <>
+                              {i > 0 ? ', ' : ''}
+                              {p.slug ? <a href={`/products/${p.slug}/`}>{p.name}</a> : p.name}
+                            </>
+                          ))}
+                    </td>
+                    <td class="spec-value">{s.data.tolerance ?? 'data pending'}</td>
+                    <td><span class="badge badge-muted">{s.data.verification_status ?? 'unverified'}</span></td>
+                  </tr>
+                ))
+              )
+            }
           </tbody>
         </table>
       </div>
@@ -78,6 +118,12 @@ const jsonLd = [
           is measured and what to put in the purchase specification.
         </p>
       </div>
+
+      <p class="meta-line">
+        Source for every class: <span class="mono">charcoal.pro</span> public
+        size-class table, supplier-declared, fetched 2026-10-07. Piece counts are
+        approximate and depend on cube mass, not on the nominal edge alone.
+      </p>
     </section>
   </div>
 </BaseLayout>

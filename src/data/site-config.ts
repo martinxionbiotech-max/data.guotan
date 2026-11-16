@@ -26,7 +26,7 @@ export const site: SiteConfig = {
   name: 'Charcoal Hub Data',
   shortName: 'Data',
   description:
-    'Structured charcoal product and specification database: product records, size classes, packaging formats, applications and public-standard test methodology for global B2B buyers.',
+    'Structured charcoal product and specification database: product records, size classes, packaging, applications and public-standard test methods.',
   nav: [
     { label: 'Products', href: '/products/' },
     { label: 'Types', href: '/types/' },
@@ -82,7 +82,7 @@ export const site: SiteConfig = {
           href: `${SITES.main}/products/coconut-shell-charcoal/`,
           external: true,
         },
-        ext('Request a Quote', `${SITES.main}/contact/`),
+        ext('Request a Quote', `${SITES.main}/request-quote/`),
         ext('Request Samples', `${SITES.main}/request-sample/`),
         ext('Testing & methodology', `${SITES.testing}/tests/ash-content/`),
         ext('Manufacturer directory', `${SITES.manufacturer}/`),

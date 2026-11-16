@@ -23,6 +23,13 @@ const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 
+/* A null value is never rendered as a bare dash: it either has a stated
+   pending reason or it cannot apply to this record's form. */
+const pendingByField = new Map(d.pending_fields.map((p) => [p.field, p]));
+const naFields = new Set(d.not_applicable.map((n) => n.field));
+const show = (value: string | null, field: string) =>
+  value ?? (pendingByField.has(field) ? 'data pending' : naFields.has(field) ? 'not applicable' : 'Not declared');
+
 const crumbs = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/products/' },
@@ -43,6 +50,7 @@ const jsonLd = [
       { name: 'Size', value: d.size ?? 'Not declared' },
       { name: 'Ash content', value: d.ash_content ?? 'Not declared' },
       { name: 'Moisture', value: d.moisture ?? 'Not declared' },
+      { name: 'Calorific value', value: d.calorific_value ?? 'Not declared' },
       { name: 'Burning time', value: d.burning_time ?? 'Not declared' },
       { name: 'Ignition time', value: d.ignition_time ?? 'Not declared' },
       { name: 'Packaging', value: d.packaging ?? 'Not declared' },
@@ -54,15 +62,16 @@ const jsonLd = [
 
 const facts: Array<[string, string]> = [
   ['Product', d.product_name],
-  ['Raw material', d.raw_material ?? 'Not declared'],
-  ['Application', d.application ?? 'Not declared'],
-  ['Size', d.size ?? 'Not declared'],
-  ['Ash', d.ash_content ?? 'Not declared'],
-  ['Moisture', d.moisture ?? 'Not declared'],
-  ['Fixed carbon', d.fixed_carbon ?? 'Not declared'],
-  ['Burning time', d.burning_time ?? 'Not declared'],
-  ['MOQ', d.minimum_order_quantity ?? 'Not declared'],
-  ['OEM', d.private_label ?? 'Not declared'],
+  ['Raw material', show(d.raw_material, 'raw_material')],
+  ['Application', show(d.application, 'application')],
+  ['Size', show(d.size, 'size')],
+  ['Ash', show(d.ash_content, 'ash_content')],
+  ['Moisture', show(d.moisture, 'moisture')],
+  ['Fixed carbon', show(d.fixed_carbon, 'fixed_carbon')],
+  ['Calorific value', show(d.calorific_value, 'calorific_value')],
+  ['Burning time', show(d.burning_time, 'burning_time')],
+  ['MOQ', show(d.minimum_order_quantity, 'minimum_order_quantity')],
+  ['OEM', show(d.private_label, 'private_label')],
   ['Manufacturer', d.manufacturer_id ?? 'Not yet verified'],
   ['Verification', d.verification_status ?? 'Not set'],
 ];
@@ -71,7 +80,7 @@ const facts: Array<[string, string]> = [
 <BaseLayout
   site={site}
   title={d.product_name}
-  description={`${d.product_name} — ${d.product_type ?? 'charcoal product'} (${d.application ?? 'application'}). ${d.data_source ?? ''}`}
+  description={d.meta_description}
   canonical={canonical}
   jsonLd={jsonLd}
   ogType="article"
@@ -120,10 +129,50 @@ const facts: Array<[string, string]> = [
       <Content />
     </div>
 
+    {
+      d.pending_fields.length > 0 && (
+        <section class="section" id="field-status">
+          <div class="section-head">
+            <h2>Field status</h2>
+            <p>
+              {d.pending_fields.length} field{d.pending_fields.length === 1 ? '' : 's'} on this record
+              {d.pending_fields.length === 1 ? ' is' : ' are'} still empty. Each one carries the
+              reason it cannot be filled yet, so an empty field is never read as a zero, a
+              default or a guess.
+            </p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Field</th><th>Why it is empty</th><th>Owed by</th></tr>
+              </thead>
+              <tbody>
+                {d.pending_fields.map((p) => (
+                  <tr>
+                    <td class="mono">{p.field}</td>
+                    <td>{p.reason}</td>
+                    <td>{p.owner ?? 'Supplier / sourcing team'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {d.not_applicable.length > 0 && (
+            <p class="meta-line">
+              Not applicable to this form:{' '}
+              {d.not_applicable.map((n, i) => (
+                <span>{i > 0 ? '; ' : ''}<span class="mono">{n.field}</span> ({n.reason})</span>
+              ))}
+            </p>
+          )}
+        </section>
+      )
+    }
+
     <p class="meta-line">
       <a href="/products/">All product records</a> ·{' '}
       <a href={`${SITES.main}/request-sample/`}>Request a sample</a> ·{' '}
-      <a href={`${SITES.main}/contact/`}>Request a quote</a>
+      <a href={`${SITES.main}/request-quote/`}>Request a quote</a>
     </p>
   </div>
 </BaseLayout>

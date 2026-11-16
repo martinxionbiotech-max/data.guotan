@@ -6,7 +6,8 @@ import { site } from '../../data/site-config';
 import { SITES, BRAND } from '../../lib/sites';
 import { breadcrumbJsonLd, datasetJsonLd } from '../../lib/seo';
 
-/* Products collection: 3 published records (supplier-declared). */
+/* Products collection: every record is published with its verification
+   status; null fields are covered by pending_fields in the record. */
 const products = await getCollection('products');
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -41,8 +42,8 @@ const fieldGroups = [
     ],
   },
   {
-    title: 'Sensory & thermal',
-    fields: ['odor', 'spark_level', 'temperature'],
+    title: 'Sensory, thermal & energy',
+    fields: ['odor', 'spark_level', 'temperature', 'calorific_value'],
   },
   {
     title: 'Commercial',
@@ -75,7 +76,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Product Database"
-  description="Structured charcoal product records: material, dimensions, proximate measurements, burning time, packaging and MOQ. Records are published only after supplier verification."
+  description="Structured charcoal product records: material, dimensions, proximate analysis, burning time, packaging and MOQ, each with a per-field status."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -85,14 +86,15 @@ const jsonLd = [
       <h1>Product database</h1>
       <p class="lede">
         One record per supplier product, built on a strict schema so that two
-        suppliers' figures can be compared field by field. Records are only
-        published once the underlying claim has been verified.
+        suppliers' figures can be compared field by field. Every record states
+        who supplied the values and how far they have been verified; empty
+        fields carry a written reason.
       </p>
     </div>
 
     <PendingNotice
       title="Records are supplier-declared until independently verified"
-      body={`${products.length} product records are published today. Each carries its verification status and data source: values labelled supplier-declared come from public supplier listings and have not been independently tested by CHARCOAL HUB. No fabricated record is ever published.`}
+      body={`${products.length} product records are published today. Each carries its verification status, its data source and a per-field status list: values labelled supplier-declared come from public supplier listings or datasheets and have not been independently tested by CHARCOAL HUB. No fabricated record is ever published, and no empty field is left unexplained.`}
     />
 
     <section class="section">
@@ -137,6 +139,7 @@ const jsonLd = [
               <th>Fixed carbon</th>
               <th>Size</th>
               <th>MOQ</th>
+              <th>Pending</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -144,7 +147,7 @@ const jsonLd = [
             {
               products.length === 0 ? (
                 <tr>
-                  <td class="null" colspan="8">
+                  <td class="null" colspan="9">
                     No verified product records yet — data pending, supplier
                     verification in progress.
                   </td>
@@ -159,6 +162,11 @@ const jsonLd = [
                     <td class="spec-value">{p.data.fixed_carbon ?? '—'}</td>
                     <td class="spec-value">{p.data.size ?? '—'}</td>
                     <td class="spec-value">{p.data.minimum_order_quantity ?? '—'}</td>
+                    <td class="spec-value">
+                      {p.data.pending_fields.length > 0
+                        ? <a href={`/products/${p.id}/#field-status`}>{p.data.pending_fields.length} field{p.data.pending_fields.length === 1 ? '' : 's'}</a>
+                        : 'none'}
+                    </td>
                     <td><span class="badge badge-muted">{p.data.verification_status ?? 'unverified'}</span></td>
                   </tr>
                 ))
@@ -188,7 +196,7 @@ const jsonLd = [
           <p>Browse the buying catalogue, including coconut shell charcoal.</p>
         </div>
         <div class="card">
-          <h3><a href={`${SITES.main}/contact/`} target="_blank" rel="noopener">Request a Quote</a></h3>
+          <h3><a href={`${SITES.main}/request-quote/`} target="_blank" rel="noopener">Request a Quote</a></h3>
           <p>Send your specification and target volume to the sourcing team.</p>
         </div>
         <div class="card">

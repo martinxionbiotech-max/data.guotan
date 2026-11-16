@@ -7,6 +7,8 @@ related_raw_materials:
 related_specifications:
   - "ash-content"
   - "burning-time"
+last_updated: "2026-11-16"
+data_source: "CHARCOAL HUB application taxonomy, written from published product records; no supplier-specific claim"
 ---
 
 # Hookah / Shisha Application

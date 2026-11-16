@@ -7,6 +7,8 @@ related_raw_materials:
   - "Bamboo"
 related_specifications:
   - "fixed-carbon"
+last_updated: "2026-11-16"
+data_source: "CHARCOAL HUB application taxonomy, written from published product records; no supplier-specific claim"
 ---
 
 # BBQ / Grilling Application

@@ -9,6 +9,22 @@ import { breadcrumbJsonLd } from '../../lib/seo';
 /* Type entries are not published until product records exist. */
 const products = await getCollection('products');
 
+/* Group the published records by product_type. No type page is generated
+   from a keyword: the table only reflects records that already exist. */
+const groups = new Map<
+  string,
+  { materials: Set<string>; forms: Set<string>; count: number }
+>();
+for (const p of products) {
+  const key = p.data.product_type ?? 'Unclassified';
+  const g = groups.get(key) ?? { materials: new Set<string>(), forms: new Set<string>(), count: 0 };
+  if (p.data.raw_material) g.materials.add(p.data.raw_material);
+  if (p.data.shape) g.forms.add(p.data.shape);
+  g.count += 1;
+  groups.set(key, g);
+}
+const typeRows = [...groups.entries()].sort((a, b) => b[1].count - a[1].count);
+
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -43,7 +59,7 @@ const jsonLd = [
 <BaseLayout
   site={site}
   title="Product Types"
-  description="How charcoal products are classified in the database: raw-material base, carbonised form, product family and grade. Type entries are pending supplier verification."
+  description="How charcoal products are classified in the database: raw-material base, carbonised form, product family and grade, with each entry's evidence status."
   canonical={canonical}
   jsonLd={jsonLd}
   breadcrumbs={crumbs.map((c) => ({ name: c.name, url: c.path }))}
@@ -59,8 +75,8 @@ const jsonLd = [
     </div>
 
     <PendingNotice
-      title="No type entries published yet"
-      body="Type entries are derived from product records: the taxonomy below describes the schema that will drive this index once enough records exist to group. The published product records are supplier-declared, so no type grouping is asserted from them yet."
+      title="Types are derived from published records, not asserted in advance"
+      body={`${products.length} product records are published, and the table below groups them by product_type. The grouping is a view of supplier-declared records, not a set of separate type pages, and it inherits their verification status.`}
     />
 
     <section class="section">
@@ -86,7 +102,7 @@ const jsonLd = [
     <section class="section">
       <div class="section-head">
         <h2>Types</h2>
-        <p>Type entries appear here once records exist under them.</p>
+        <p>One row per product type currently present in the record set.</p>
       </div>
       <div class="table-wrap">
         <table>
@@ -94,13 +110,25 @@ const jsonLd = [
             <tr><th>Type</th><th>Raw material</th><th>Form</th><th>Published records</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="null" colspan="4">
-                No type entries yet — data pending, supplier verification in
-                progress. {products.length} supplier-declared product records
-                currently support the taxonomy.
-              </td>
-            </tr>
+            {
+              typeRows.length === 0 ? (
+                <tr>
+                  <td class="null" colspan="4">
+                    No type entries yet — data pending, supplier verification in
+                    progress.
+                  </td>
+                </tr>
+              ) : (
+                typeRows.map(([type, g]) => (
+                  <tr>
+                    <td>{type}</td>
+                    <td class="spec-value">{[...g.materials].join(', ') || '—'}</td>
+                    <td class="spec-value">{[...g.forms].join(', ') || '—'}</td>
+                    <td class="spec-value">{g.count}</td>
+                  </tr>
+                ))
+              )
+            }
           </tbody>
         </table>
       </div>

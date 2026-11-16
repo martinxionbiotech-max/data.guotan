@@ -1,7 +1,7 @@
 ---
 title: "Odor in Charcoal"
 slug: odor
-description: "What odor means for hookah charcoal quality, how feedstock purity and carbonisation drive it, why it is a sensory rather than a laboratory metric, and how buyers assess it."
+description: "What odor means for hookah charcoal, how feedstock and carbonisation drive it, why it is sensory rather than laboratory, and how buyers assess it."
 metric: "Odor — the sensory character of the charcoal during lighting and combustion; for hookah use, whether the product adds any taste or smell of its own to the session."
 what_it_measures: >-
   Odor describes what a charcoal releases to the senses during lighting and the
