@@ -148,4 +148,4 @@ class-level references.
 - [Specification: Moisture](/specifications/moisture/)
 - [Specification: Fixed Carbon](/specifications/fixed-carbon/)
 - [Request a Sample](https://chinacharcoalhub.com/request-sample/)
-- [Request a Quote](https://chinacharcoalhub.com/contact/)
+- [Request a Quote](https://chinacharcoalhub.com/request-quote/)

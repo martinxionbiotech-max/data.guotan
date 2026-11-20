@@ -117,4 +117,4 @@ No independent laboratory report has been provided yet.
 
 - [Quick-light vs natural charcoal](https://knowledge.chinacharcoalhub.com/knowledge/quick-light-vs-natural-coconut-charcoal/)
 - [How burning time is measured](/specifications/burning-time/)
-- [Request a quote](https://chinacharcoalhub.com/contact/)
+- [Request a quote](https://chinacharcoalhub.com/request-quote/)

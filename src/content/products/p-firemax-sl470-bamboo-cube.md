@@ -111,4 +111,4 @@ test report before contracting.
 ## Related
 
 - [Size classes](/sizes/) · [How burning time is measured](/specifications/burning-time/)
-- [Request a quote](https://chinacharcoalhub.com/contact/)
+- [Request a quote](https://chinacharcoalhub.com/request-quote/)

@@ -109,4 +109,4 @@ No independent laboratory report has been provided yet.
 
 - [25mm Natural Coconut Shell Hookah Charcoal Cubes](/products/25mm-natural-coconut-shell-hookah-charcoal/)
 - [25 mm vs 26 mm charcoal](https://knowledge.chinacharcoalhub.com/knowledge/25mm-vs-26mm-charcoal/)
-- [Request a quote](https://chinacharcoalhub.com/contact/)
+- [Request a quote](https://chinacharcoalhub.com/request-quote/)
